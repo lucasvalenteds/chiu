@@ -1,13 +1,18 @@
 <template>
-  <div class="home">
-    <h1>Title</h1>
+  <div>
+    <NoiseMeterChart/>
   </div>
 </template>
 
 <script lang="ts">
+import NoiseMeterChart from "@/components/NoiseMeterChart.vue";
 import Vue from "vue";
 import Component from "vue-class-component";
 
-@Component
+@Component({
+  components: {
+    NoiseMeterChart,
+  },
+})
 export default class Home extends Vue {}
 </script>

@@ -1,5 +1,6 @@
 {
     "app.name": "Chiu",
     "app.toolbar.about": "Sobre",
-    "app.toolbar.contribute": "Como contribuir"
+    "app.toolbar.contribute": "Como contribuir",
+    "noise.meter.chart.title": "Medidor de ruido"
 }
