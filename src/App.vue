@@ -1,15 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline">
-        <span>Chiu</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn flat>
-        Sobre
-      </v-btn>
-    </v-toolbar>
-
+    <AppToolbar/>
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -19,7 +10,12 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import AppToolbar from "@/components/AppToolbar.vue";
 
-@Component
+@Component({
+  components: {
+    AppToolbar
+  }
+})
 export default class App extends Vue {}
 </script>
