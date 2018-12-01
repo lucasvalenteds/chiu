@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>{{ $t("noise.meter.chart.title") }}</h1>
     <NoiseMeterChart/>
   </div>
 </template>
