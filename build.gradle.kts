@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val logback_version: String by project
-val ktor_version: String by project
-val kotlin_version: String by project
+val logbackVersion: String by project
+val ktorVersion: String by project
+val kotlinVersion: String by project
 
 plugins {
     application
@@ -24,20 +24,14 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    compile("io.ktor:ktor-server-netty:$ktor_version")
-    compile("ch.qos.logback:logback-classic:$logback_version")
-    compile("io.ktor:ktor-server-core:$ktor_version")
-    compile("io.ktor:ktor-jackson:$ktor_version")
-    compile("io.ktor:ktor-locations:$ktor_version")
-    compile("io.ktor:ktor-metrics:$ktor_version")
-    compile("io.ktor:ktor-server-host-common:$ktor_version")
-    compile("io.ktor:ktor-websockets:$ktor_version")
-    testCompile("io.ktor:ktor-server-tests:$ktor_version")
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    compile("io.ktor:ktor-server-netty:$ktorVersion")
+    compile("ch.qos.logback:logback-classic:$logbackVersion")
+    compile("io.ktor:ktor-server-core:$ktorVersion")
+    compile("io.ktor:ktor-jackson:$ktorVersion")
+    compile("io.ktor:ktor-locations:$ktorVersion")
+    compile("io.ktor:ktor-metrics:$ktorVersion")
+    compile("io.ktor:ktor-server-host-common:$ktorVersion")
+    compile("io.ktor:ktor-websockets:$ktorVersion")
+    testCompile("io.ktor:ktor-server-tests:$ktorVersion")
 }
-
-kotlin.sourceSets["main"].kotlin.srcDirs("src")
-kotlin.sourceSets["test"].kotlin.srcDirs("test")
-
-sourceSets["main"].resources.srcDirs("resources")
-sourceSets["test"].resources.srcDirs("testresources")
