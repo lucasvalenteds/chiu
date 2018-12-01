@@ -1,1 +1,5 @@
-{}
+{
+    "app.name": "Chiu",
+    "app.toolbar.about": "Sobre",
+    "app.toolbar.contribute": "Como contribuir"
+}

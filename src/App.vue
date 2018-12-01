@@ -8,14 +8,14 @@
 </template>
 
 <script lang="ts">
+import AppToolbar from "@/components/AppToolbar.vue";
 import Vue from "vue";
 import Component from "vue-class-component";
-import AppToolbar from "@/components/AppToolbar.vue";
 
 @Component({
   components: {
-    AppToolbar
-  }
+    AppToolbar,
+  },
 })
 export default class App extends Vue {}
 </script>
