@@ -1,0 +1,41 @@
+<template>
+  <v-data-table :headers="noiseLevelHeaders" :items="noiseLevelScore" hide-actions>
+    <template slot="items" slot-scope="props">
+      <td class="text-xs-center">{{ props.item.level }}</td>
+      <td>{{ props.item.description }}</td>
+    </template>
+  </v-data-table>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component
+export default class NoiseLevelsTable extends Vue {
+  get noiseLevelHeaders(): Array<any> {
+    return [
+      {
+        text: this.$t("noise.levels.table.headers.level"),
+        value: "level",
+        sortable: false,
+        align: "center"
+      },
+      {
+        text: this.$t("noise.levels.table.headers.description"),
+        value: "description",
+        sortable: false
+      }
+    ];
+  }
+
+  get noiseLevelScore(): Array<{ level: string; description: string }> {
+    return [120, 110, 105, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0]
+      .map((level: number) => level.toString())
+      .map((level: string) => ({
+        level: level.toString(),
+        description: this.$t("noise.levels.table.data." + level) as string
+      }));
+  }
+}
+</script>
