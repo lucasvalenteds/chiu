@@ -1,5 +1,5 @@
 <template>
-    <ve-gauge :data="chartData" :settings="chartSettings"></ve-gauge>
+  <ve-gauge :data="chartData" :settings="chartSettings"></ve-gauge>
 </template>
 
 <script lang="ts">
@@ -21,12 +21,17 @@ export default class NoiseMeterChart extends Vue {
   get chartSettings() {
     return {
       dataName: {
-        decibels: this.$t("noise.meter.chart.label") as string,
+        decibels: this.$t("noise.meter.chart.noise.label") as string,
       },
       seriesMap: {
         decibels: {
           min: 0,
           max: 120,
+          axisLine: {
+            lineStyle: {
+              color: [[0.38, "#4CAF50"], [0.7, "#FFC107"], [1, "#F44336"]],
+            },
+          },
         },
       },
     };
