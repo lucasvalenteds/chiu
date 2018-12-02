@@ -55,18 +55,16 @@ fun Application.module(
 
     routing {
         webSocket("/report") {
-            var iteration = 0
             while (true) {
                 try {
                     val payload = incoming.receive() as Frame.Text
 
                     val level = getJsonMapper().readValue<NoiseLevel>(payload.readText())
                     val report = NoiseReport(ObjectId().toString(), level.level, Date.from(Instant.now()))
-                    val sseEvent = NoiseEvent(iteration, "noise", report)
+                    val sseEvent = NoiseEvent("noise", report)
 
                     database.saveNoiseReport(report)
                     noiseChannel.send(sseEvent)
-                    iteration++
 
                     log.trace(sseEvent.toString())
                 } catch (exception: ClosedReceiveChannelException) {
@@ -79,7 +77,6 @@ fun Application.module(
             call.response.header(HttpHeaders.CacheControl, "no-cache")
             call.respondTextWriter(contentType = ContentType.parse("text/event-stream")) {
                 for (sseEvent in noiseChannel) {
-                    write("id: ${sseEvent.id}\n")
                     write("event: ${sseEvent.event}\n")
                     write("data: ${getJsonMapper().writeValueAsString(sseEvent.data)}\n")
                     write("\n")
@@ -94,4 +91,4 @@ fun Application.module(
 
 data class NoiseLevel(val level: Int)
 data class NoiseReport(val id: String, val level: Int, val timestamp: Date)
-data class NoiseEvent(val id: Int, val event: String, val data: NoiseReport)
+data class NoiseEvent(val event: String, val data: NoiseReport)
