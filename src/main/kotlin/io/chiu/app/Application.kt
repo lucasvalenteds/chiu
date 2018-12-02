@@ -28,6 +28,7 @@ import io.ktor.util.KtorExperimentalAPI
 import io.ktor.websocket.webSocket
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import org.bson.types.ObjectId
 import java.time.Instant
 import java.util.Date
@@ -56,17 +57,22 @@ fun Application.module(
         webSocket("/report") {
             var iteration = 0
             while (true) {
-                val payload = incoming.receive() as Frame.Text
+                try {
+                    val payload = incoming.receive() as Frame.Text
 
-                val level = getJsonMapper().readValue<NoiseLevel>(payload.readText())
-                val report = NoiseReport(ObjectId().toString(), level.level, Date.from(Instant.now()))
-                val sseEvent = NoiseEvent(iteration, "noise", report)
+                    val level = getJsonMapper().readValue<NoiseLevel>(payload.readText())
+                    val report = NoiseReport(ObjectId().toString(), level.level, Date.from(Instant.now()))
+                    val sseEvent = NoiseEvent(iteration, "noise", report)
 
-                database.saveNoiseReport(report)
-                noiseChannel.send(sseEvent)
-                iteration++
+                    database.saveNoiseReport(report)
+                    noiseChannel.send(sseEvent)
+                    iteration++
 
-                log.trace(sseEvent.toString())
+                    log.trace(sseEvent.toString())
+                } catch (exception: ClosedReceiveChannelException) {
+                    log.info(exception.message)
+                    break
+                }
             }
         }
         get("/listen") {
