@@ -29,9 +29,9 @@ dependencies {
     compile("ch.qos.logback:logback-classic:$logbackVersion")
     compile("io.ktor:ktor-server-core:$ktorVersion")
     compile("io.ktor:ktor-jackson:$ktorVersion")
-    compile("io.ktor:ktor-locations:$ktorVersion")
     compile("io.ktor:ktor-metrics:$ktorVersion")
     compile("io.ktor:ktor-server-host-common:$ktorVersion")
     compile("io.ktor:ktor-websockets:$ktorVersion")
     testCompile("io.ktor:ktor-server-tests:$ktorVersion")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7")
 }
