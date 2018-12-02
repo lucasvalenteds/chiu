@@ -7,6 +7,7 @@
     "app.about.modal.button.close": "Fechar",
     "noise.meter.chart.noise.title": "Nível de ruído",
     "noise.meter.chart.noise.label": "Decibéis",
+    "noise.meter.chart.noise.error": "Serviço indisponível",
     "noise.levels.table.title": "Valores de referência",
     "noise.levels.table.data.0": "Limiar ouvido a um kHz",
     "noise.levels.table.data.10": "Quarto com bom isolamento sonoro",
