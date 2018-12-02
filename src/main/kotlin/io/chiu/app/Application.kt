@@ -43,10 +43,12 @@ fun Application.module() {
     })
     enableWebSockets()
 
-    val channel: ReceiveChannel<Noise> = produce {
+    val channel: ReceiveChannel<SSEEvent> = produce {
+        var n = 0
         while (true) {
-            send(Noise(UUID.randomUUID(), (0..120).random(), LocalDateTime.now()))
-            delay(500)
+            send(SSEEvent(n, "noise", Noise(UUID.randomUUID(), (0..120).random(), LocalDateTime.now())))
+            delay(1000)
+            n++
         }
     }
 
@@ -67,17 +69,26 @@ fun Application.module() {
     }
 }
 
+data class SSEEvent(
+    val id: Int,
+    val event: String,
+    val data: Noise
+)
+
 data class Noise(
     val uuid: UUID,
     val level: Int,
     val timestamp: LocalDateTime
 )
 
-private suspend fun ApplicationCall.respondSse(events: ReceiveChannel<Noise>) {
+private suspend fun ApplicationCall.respondSse(events: ReceiveChannel<SSEEvent>) {
     response.header(HttpHeaders.CacheControl, "no-cache")
     respondTextWriter(contentType = ContentType.parse("text/event-stream")) {
         for (event in events) {
-            write(getJsonMapper().writeValueAsString(event).plus("\n"))
+            write("id: ${event.id}\n")
+            write("event: ${event.event}\n")
+            write("data: ${getJsonMapper().writeValueAsString(event.data)}\n")
+            write("\n")
             flush()
         }
     }
