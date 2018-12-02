@@ -52,7 +52,6 @@ fun Application.module(
     })
     enableWebSockets()
 
-
     routing {
         webSocket("/report") {
             var iteration = 0
@@ -67,8 +66,7 @@ fun Application.module(
                 noiseChannel.send(sseEvent)
                 iteration++
 
-                log.info("/report :: {}", sseEvent.toString())
-                outgoing.send(Frame.Text("OK"))
+                log.trace(sseEvent.toString())
             }
         }
         get("/listen") {
@@ -80,7 +78,7 @@ fun Application.module(
                     write("data: ${getJsonMapper().writeValueAsString(sseEvent.data)}\n")
                     write("\n")
                     flush()
-                    log.info("/listen :: {}", sseEvent.toString())
+                    log.trace(sseEvent.toString())
                 }
             }
         }
