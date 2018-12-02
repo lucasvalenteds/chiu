@@ -1,5 +1,6 @@
 package io.chiu.app
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.chiu.app.configuration.onEnvironment
 import io.chiu.app.features.enableCORS
 import io.chiu.app.features.enableExceptionHandling
@@ -11,6 +12,7 @@ import io.chiu.app.features.getJsonMapper
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
+import io.ktor.application.log
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.cio.websocket.Frame
@@ -57,17 +59,24 @@ fun Application.module() {
             call.respondSse(channel)
         }
         enableExceptionHandling()
-        webSocket("/echo") {
-            send(Frame.Text("Hi from server"))
+        webSocket("/report") {
             while (true) {
-                val frame = incoming.receive()
-                if (frame is Frame.Text) {
-                    send(Frame.Text("Client said: " + frame.readText()))
+                when (val frame = incoming.receive()) {
+                    is Frame.Text -> {
+                        log.info(getJsonMapper().readValue<Report>(frame.readText()).toString())
+                        send(Frame.Text(frame.readText()))
+                    }
                 }
             }
         }
     }
 }
+
+data class Report(
+    val latitude: Double,
+    val longitude: Double,
+    val level: Int
+)
 
 data class SSEEvent(
     val id: Int,
