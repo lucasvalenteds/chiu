@@ -1,67 +1,44 @@
 package io.chiu.app
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import com.fasterxml.jackson.databind.*
-import io.ktor.jackson.*
-import io.ktor.features.*
+import io.chiu.app.configuration.onEnvironment
+import io.chiu.app.features.enableCORS
+import io.chiu.app.features.enableExceptionHandling
+import io.chiu.app.features.enableHTTPSOnly
+import io.chiu.app.features.enableJsonSerialization
+import io.chiu.app.features.enableLogging
+import io.chiu.app.features.enableWebSockets
+import io.ktor.application.Application
+import io.ktor.application.call
+import io.ktor.application.install
+import io.ktor.http.ContentType
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.readText
-import io.ktor.locations.*
+import io.ktor.locations.KtorExperimentalLocationsAPI
+import io.ktor.locations.Location
+import io.ktor.locations.Locations
+import io.ktor.locations.get
+import io.ktor.response.respond
+import io.ktor.response.respondText
+import io.ktor.routing.get
+import io.ktor.routing.routing
+import io.ktor.server.netty.EngineMain
+import io.ktor.util.KtorExperimentalAPI
 import io.ktor.websocket.webSocket
-import org.slf4j.event.*
-import java.time.Duration
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>): Unit = EngineMain.main(args)
 
+@KtorExperimentalAPI
 @KtorExperimentalLocationsAPI
-@Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
-    install(ContentNegotiation) {
-        jackson {
-            enable(SerializationFeature.INDENT_OUTPUT)
-        }
-    }
-
-    install(Locations) {
-    }
-
-    install(CallLogging) {
-        level = Level.INFO
-        filter { call -> call.request.path().startsWith("/") }
-    }
-
-    install(CORS) {
-        method(HttpMethod.Options)
-        method(HttpMethod.Put)
-        method(HttpMethod.Delete)
-        method(HttpMethod.Patch)
-        header(HttpHeaders.Authorization)
-        header("MyCustomHeader")
-        allowCredentials = true
-        anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
-    }
-
-    // http://ktor.io/servers/features/https-redirect.html#testing
-    if (!testing) {
-        install(HttpsRedirect) {
-            // The port to redirect to. By default 443, the default HTTPS port.
-            sslPort = 443
-            // 301 Moved Permanently, or 302 Found redirect.
-            permanentRedirect = true
-        }
-    }
-
-    install(io.ktor.websocket.WebSockets) {
-        pingPeriod = Duration.ofSeconds(15)
-        timeout = Duration.ofSeconds(15)
-        maxFrameSize = Long.MAX_VALUE
-        masking = false
-    }
+@Suppress("unused")
+fun Application.module() {
+    enableJsonSerialization()
+    install(Locations)
+    enableLogging()
+    enableCORS()
+    onEnvironment(production = {
+        enableHTTPSOnly()
+    })
+    enableWebSockets()
 
     routing {
         get("/") {
@@ -83,15 +60,7 @@ fun Application.module(testing: Boolean = false) {
             call.respondText("Inside $it")
         }
 
-        install(StatusPages) {
-            exception<AuthenticationException> { cause ->
-                call.respond(HttpStatusCode.Unauthorized)
-            }
-            exception<AuthorizationException> { cause ->
-                call.respond(HttpStatusCode.Forbidden)
-            }
-
-        }
+        enableExceptionHandling()
 
         webSocket("/myws/echo") {
             send(Frame.Text("Hi from server"))
@@ -118,7 +87,3 @@ data class Type(val name: String) {
     @Location("/list/{page}")
     data class List(val type: Type, val page: Int)
 }
-
-class AuthenticationException : RuntimeException()
-class AuthorizationException : RuntimeException()
-
