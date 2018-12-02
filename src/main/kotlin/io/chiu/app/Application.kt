@@ -45,14 +45,8 @@ fun Application.module() {
 
     val channel: ReceiveChannel<Noise> = produce {
         while (true) {
-            send(
-                Noise(
-                    uuid = UUID.randomUUID(),
-                    level = (0..120).random(),
-                    timestamp = LocalDateTime.now()
-                )
-            )
-            delay(1000)
+            send(Noise(UUID.randomUUID(), (0..120).random(), LocalDateTime.now()))
+            delay(500)
         }
     }
 
@@ -79,7 +73,7 @@ data class Noise(
     val timestamp: LocalDateTime
 )
 
-suspend fun ApplicationCall.respondSse(events: ReceiveChannel<Noise>) {
+private suspend fun ApplicationCall.respondSse(events: ReceiveChannel<Noise>) {
     response.header(HttpHeaders.CacheControl, "no-cache")
     respondTextWriter(contentType = ContentType.parse("text/event-stream")) {
         for (event in events) {
