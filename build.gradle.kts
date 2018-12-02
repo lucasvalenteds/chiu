@@ -34,4 +34,6 @@ dependencies {
     compile("io.ktor:ktor-websockets:$ktorVersion")
     testCompile("io.ktor:ktor-server-tests:$ktorVersion")
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7")
+    compile("org.mongodb:mongodb-driver-reactivestreams:1.10.0")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.0.1")
 }

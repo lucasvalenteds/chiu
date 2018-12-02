@@ -1,6 +1,8 @@
 package io.chiu.app
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.mongodb.ConnectionString
+import com.mongodb.reactivestreams.client.MongoClients
 import io.chiu.app.configuration.onEnvironment
 import io.chiu.app.features.enableCORS
 import io.chiu.app.features.enableExceptionHandling
@@ -25,6 +27,8 @@ import io.ktor.util.KtorExperimentalAPI
 import io.ktor.websocket.webSocket
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.reactive.awaitSingle
+import org.bson.Document
 import org.bson.types.ObjectId
 import java.time.Instant
 import java.util.Date
@@ -43,6 +47,10 @@ fun Application.module() {
     })
     enableWebSockets()
 
+    val client = MongoClients.create(ConnectionString(environment.config.property("database.url").getString()))
+    val database = client.getDatabase(environment.config.property("database.name").getString())
+    val collection = database.getCollection("noises")
+
     routing {
         val noiseChannel = Channel<NoiseEvent>()
 
@@ -50,12 +58,20 @@ fun Application.module() {
             var iteration = 0
             while (true) {
                 val payload = incoming.receive() as Frame.Text
+
                 val level = getJsonMapper().readValue<NoiseLevel>(payload.readText())
                 val report = NoiseReport(ObjectId().toString(), level.level, Date.from(Instant.now()))
                 val sseEvent = NoiseEvent(iteration, "noise", report)
-                log.info("/report :: {}", sseEvent.toString())
+
+                val document = Document()
+                    .append("_id", report.id)
+                    .append("level", level.level)
+                    .append("timestamp", report.timestamp)
+                collection.insertOne(document).awaitSingle()
+
                 noiseChannel.send(sseEvent)
                 iteration++
+                log.info("/report :: {}", sseEvent.toString())
             }
         }
 
@@ -63,12 +79,12 @@ fun Application.module() {
             call.response.header(HttpHeaders.CacheControl, "no-cache")
             call.respondTextWriter(contentType = ContentType.parse("text/event-stream")) {
                 for (sseEvent in noiseChannel) {
-                    log.info("/listen :: {}", sseEvent.toString())
                     write("id: ${sseEvent.id}\n")
                     write("event: ${sseEvent.event}\n")
                     write("data: ${getJsonMapper().writeValueAsString(sseEvent.data)}\n")
                     write("\n")
                     flush()
+                    log.info("/listen :: {}", sseEvent.toString())
                 }
             }
         }
