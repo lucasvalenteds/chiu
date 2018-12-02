@@ -2,10 +2,10 @@ package io.chiu.app
 
 import io.ktor.application.Application
 import io.ktor.config.MapApplicationConfig
-import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.util.KtorExperimentalAPI
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@KtorExperimentalLocationsAPI
+@ExperimentalCoroutinesApi
 @KtorExperimentalAPI
 fun Application.testableModule() {
     (environment.config as MapApplicationConfig).apply {

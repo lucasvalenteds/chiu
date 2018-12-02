@@ -18,7 +18,6 @@ fun Application.enableJsonSerialization() {
 fun getJsonMapper(): ObjectMapper = jacksonObjectMapper().setup()
 
 private fun ObjectMapper.setup(): ObjectMapper {
-    //enable(SerializationFeature.INDENT_OUTPUT)
     registerModule(JavaTimeModule())
     disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
     return this
