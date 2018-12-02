@@ -36,4 +36,11 @@ dependencies {
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7")
     compile("org.mongodb:mongodb-driver-reactivestreams:1.10.0")
     compile("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.0.1")
+    testImplementation("io.mockk:mockk:1.8.13.kotlin13")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.10")
+    testImplementation("io.strikt:strikt-core:0.17.0")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
