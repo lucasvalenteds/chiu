@@ -1,6 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.heroku.sdk.gradle.HerokuPluginExtension
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val herokuAppName: String by project
 val logbackVersion: String by project
 val ktorVersion: String by project
 val kotlinVersion: String by project
@@ -8,6 +11,8 @@ val kotlinVersion: String by project
 plugins {
     application
     kotlin("jvm") version "1.3.10"
+    id("com.github.johnrengelman.shadow") version "4.0.3"
+    id("com.heroku.sdk.heroku-gradle") version "1.0.4"
 }
 
 group = "app"
@@ -43,4 +48,16 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+val shadowJar: ShadowJar by tasks
+val jarFilePath = shadowJar.destinationDir
+    .relativeTo(project.projectDir)
+    .resolve(shadowJar.archiveName)
+
+configure<HerokuPluginExtension> {
+    appName = herokuAppName
+    includes = listOf(jarFilePath.toString())
+    includeBuildDir = false
+    processTypes = mapOf("web" to "java -jar $jarFilePath")
 }
