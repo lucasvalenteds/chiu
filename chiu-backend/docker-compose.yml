@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+
+  database:
+    image: mongo:4
+    container_name: chiu-db
+    ports:
+      - "27018:27017"
+    volumes:
+      - "$PWD/.docker/mongo:/data/db"
+    networks:
+      - chiu-network
+  rabbitmq:
+    image: rabbitmq:3
+    container_name: chiu-queue
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      - chiu-network
+
+networks:
+  chiu-network:
+    ipam:
+      config:
+        - subnet: 192.168.4.123/24

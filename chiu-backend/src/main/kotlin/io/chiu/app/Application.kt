@@ -54,7 +54,7 @@ fun Application.module(
     enableWebSockets()
 
     routing {
-        webSocket("/report") {
+        webSocket("/") {
             while (true) {
                 try {
                     val payload = incoming.receive() as Frame.Text
