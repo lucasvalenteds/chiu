@@ -39,7 +39,7 @@ export default class NoiseMeterChart extends Vue {
       seriesMap: {
         decibels: {
           min: 0,
-          max: 120,
+          max: 150,
           axisLine: {
             lineStyle: {
               color: [[0.38, "#4CAF50"], [0.7, "#FFC107"], [1, "#F44336"]],
