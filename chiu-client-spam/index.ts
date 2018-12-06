@@ -1,8 +1,7 @@
 import { client as WebSocket, connection, IMessage } from "websocket";
 import EventSource from "eventsource";
 
-//const address: string = "chiu-app.herokuapp.com";
-const address: string = "localhost:8080";
+const address: string = process.env.API_URL || "localhost:8080";
 
 // SENDING DATA
 const socket = new WebSocket();
