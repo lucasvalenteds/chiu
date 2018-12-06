@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <AppToolbar @onAbout="openAboutProjectModal" @onMaps="renderMapsPage"/>
+    <AppToolbar @onAbout="openAboutProjectModal"/> 
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -29,10 +29,6 @@ export default class App extends Vue {
 
   public closeAboutProjectModal(): void {
     this.showAboutModal = false;
-  }
-
-  public renderMapsPage(): void {
-    return;
   }
 }
 </script>
