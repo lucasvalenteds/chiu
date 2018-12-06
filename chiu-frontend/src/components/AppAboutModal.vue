@@ -6,7 +6,7 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat>Github</v-btn>
+        <v-btn href="#" flat>{{ $t("app.about.modal.button.source") }}</v-btn>
         <v-btn
           color="primary"
           flat
