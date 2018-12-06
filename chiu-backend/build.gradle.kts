@@ -15,7 +15,7 @@ plugins {
     id("com.heroku.sdk.heroku-gradle") version "1.0.4"
 }
 
-group = "app"
+group = "io.chiu"
 version = "0.1.0"
 
 application {
