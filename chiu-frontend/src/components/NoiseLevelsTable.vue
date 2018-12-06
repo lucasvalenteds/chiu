@@ -30,7 +30,7 @@ export default class NoiseLevelsTable extends Vue {
   }
 
   get noiseLevelScore(): Array<{ level: string; description: string }> {
-    return [120, 110, 105, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0]
+    return [150, 130, 120, 110, 100, 90, 80, 70, 60, 50, 10, 0]
       .map((level: number) => ({
         level: level.toString(),
         description: this.$t(`noise.levels.table.data.${level}`) as string,
