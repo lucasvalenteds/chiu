@@ -11,18 +11,6 @@ services:
       - "$PWD/.docker/mongo:/data/db"
     networks:
       - chiu-network
-  rabbitmq:
-    image: rabbitmq:3
-    container_name: chiu-queue
-    ports:
-      - "5671:5671"
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
-    networks:
-      - chiu-network
 
 networks:
   chiu-network:
