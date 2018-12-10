@@ -1,7 +1,8 @@
 import { client as WebSocket, connection, IMessage } from "websocket";
 import EventSource from "eventsource";
 
-const address: string = process.env.API_URL || "localhost:8080";
+const serverUrlToReport: string = process.env.WS_URL || "ws://localhost:8080/";
+const serverUrlToListen: string = process.env.API_URL || "http://localhost:8080/listen";
 
 // SENDING DATA
 const socket = new WebSocket();
@@ -22,10 +23,10 @@ socket.on("connect", (ws: connection) => {
         level: Math.floor(Math.random() * 100)
     })), 100);
 });
-socket.connect(`ws://${address}/report`);
+socket.connect(serverUrlToReport);
 
 // RECEIVING DATA
-const sse = new EventSource(`http://${address}/listen`);
+const sse = new EventSource(serverUrlToListen);
 sse.addEventListener("close", (event: any) => {
     console.log("Disconnected from /listen: ", event);
 });
