@@ -12,6 +12,7 @@ import io.chiu.app.features.enableJsonSerialization
 import io.chiu.app.features.enableLogging
 import io.chiu.app.features.enableWebSockets
 import io.chiu.app.features.getJsonMapper
+import io.chiu.app.features.serveFrontEnd
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.log
@@ -45,6 +46,9 @@ fun Application.module(
     ),
     noiseChannel: Channel<NoiseEvent> = Channel()
 ) {
+    val frontEndFilesFolder = environment.config.property("frontend.folder").getString()
+    val frontEndIndexFile = ClassLoader.getSystemResourceAsStream("$frontEndFilesFolder/index.html").readBytes()
+
     enableJsonSerialization()
     enableLogging()
     enableCORS()
@@ -85,6 +89,7 @@ fun Application.module(
                 }
             }
         }
+        serveFrontEnd(frontEndFilesFolder, frontEndIndexFile)
         enableExceptionHandling()
     }
 }
