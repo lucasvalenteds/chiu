@@ -58,6 +58,6 @@ val jarFilePath = shadowJar.destinationDir
 configure<HerokuPluginExtension> {
     appName = herokuAppName
     includes = listOf(jarFilePath.toString())
-    includeBuildDir = false
+    includeBuildDir = true
     processTypes = mapOf("web" to "java -jar $jarFilePath")
 }
