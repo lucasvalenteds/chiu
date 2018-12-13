@@ -7,9 +7,8 @@
 
 EthernetClient ethernetClient;
 
-char serverIp[] = "192.168.1.8";
-int serverPort = 8080;
-WebSocketClient client = WebSocketClient(ethernetClient, serverIp, serverPort);
+char serverIp[] = "chiu-app.herokuapp.com";
+WebSocketClient client = WebSocketClient(ethernetClient, serverIp);
 
 const size_t bufferSize = JSON_OBJECT_SIZE(1);
 DynamicJsonBuffer jsonBuffer(bufferSize);
