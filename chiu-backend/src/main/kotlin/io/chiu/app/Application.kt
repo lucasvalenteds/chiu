@@ -41,8 +41,9 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 @Suppress("unused")
 fun Application.module(
     database: Database = DatabaseNoSQL(
-        client = MongoClients.create(environment.config.property("database.url").getString()),
-        databaseName = environment.config.property("database.name").getString()
+        MongoClients.create(environment.config.property("database.url").getString())
+            .getDatabase(environment.config.property("database.name").getString())
+            .getCollection("noises")
     ),
     noiseChannel: Channel<NoiseEvent> = Channel()
 ) {
