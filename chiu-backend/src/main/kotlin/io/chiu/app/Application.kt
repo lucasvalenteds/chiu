@@ -45,11 +45,10 @@ fun Application.module(
             .getDatabase(environment.config.property("database.name").getString())
             .getCollection("noises")
     ),
-    noiseChannel: Channel<NoiseEvent> = Channel()
+    noiseChannel: Channel<NoiseEvent> = Channel(),
+    frontEndFolder: String = environment.config.property("frontend.folder").getString(),
+    frontEndIndex: ByteArray = ClassLoader.getSystemResourceAsStream("$frontEndFolder/index.html").readBytes()
 ) {
-    val frontEndFilesFolder = environment.config.property("frontend.folder").getString()
-    val frontEndIndexFile = ClassLoader.getSystemResourceAsStream("$frontEndFilesFolder/index.html").readBytes()
-
     enableJsonSerialization()
     enableLogging()
     enableCORS()
@@ -90,7 +89,7 @@ fun Application.module(
                 }
             }
         }
-        serveFrontEnd(frontEndFilesFolder, frontEndIndexFile)
+        serveFrontEnd(frontEndFolder, frontEndIndex)
         enableExceptionHandling()
     }
 }
