@@ -4,13 +4,20 @@ import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val herokuAppName: String by project
-val logbackVersion: String by project
-val ktorVersion: String by project
-val kotlinVersion: String by project
+
+val versionJackson: String by project
+val versionKotlinCoroutines: String by project
+val versionKotlinStdlib: String by project
+val versionKotlinTest: String by project
+val versionKtor: String by project
+val versionLogback: String by project
+val versionMockk: String by project
+val versionMongoDbDriver: String by project
+val versionStrikt: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.3.10"
+    kotlin("jvm") version "1.3.11"
     id("com.github.johnrengelman.shadow") version "4.0.3"
     id("com.heroku.sdk.heroku-gradle") version "1.0.4"
 }
@@ -29,21 +36,21 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    compile("io.ktor:ktor-server-netty:$ktorVersion")
-    compile("ch.qos.logback:logback-classic:$logbackVersion")
-    compile("io.ktor:ktor-server-core:$ktorVersion")
-    compile("io.ktor:ktor-jackson:$ktorVersion")
-    compile("io.ktor:ktor-metrics:$ktorVersion")
-    compile("io.ktor:ktor-server-host-common:$ktorVersion")
-    compile("io.ktor:ktor-websockets:$ktorVersion")
-    testCompile("io.ktor:ktor-server-tests:$ktorVersion")
-    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7")
-    compile("org.mongodb:mongodb-driver-reactivestreams:1.10.0")
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.0.1")
-    testImplementation("io.mockk:mockk:1.8.13.kotlin13")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.10")
-    testImplementation("io.strikt:strikt-core:0.17.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versionKotlinStdlib")
+    implementation("io.ktor:ktor-server-netty:$versionKtor")
+    implementation("ch.qos.logback:logback-classic:$versionLogback")
+    implementation("io.ktor:ktor-server-core:$versionKtor")
+    implementation("io.ktor:ktor-jackson:$versionKtor")
+    implementation("io.ktor:ktor-metrics:$versionKtor")
+    implementation("io.ktor:ktor-server-host-common:$versionKtor")
+    implementation("io.ktor:ktor-websockets:$versionKtor")
+    testImplementation("io.ktor:ktor-server-tests:$versionKtor")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versionJackson")
+    implementation("org.mongodb:mongodb-driver-reactivestreams:$versionMongoDbDriver")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$versionKotlinCoroutines")
+    testImplementation("io.mockk:mockk:$versionMockk")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:$versionKotlinTest")
+    testImplementation("io.strikt:strikt-core:$versionStrikt")
 }
 
 tasks.withType<Test> {
