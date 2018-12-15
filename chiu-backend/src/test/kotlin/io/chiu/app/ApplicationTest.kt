@@ -1,7 +1,7 @@
 package io.chiu.app
 
 import io.chiu.app.configuration.Database
-import io.chiu.app.features.getJsonMapper
+import io.chiu.app.features.JSON
 import io.chiu.app.testing.testableModule
 import io.kotlintest.fail
 import io.kotlintest.specs.StringSpec
@@ -37,7 +37,7 @@ class ApplicationTest : StringSpec({
         withTestApplication({ testableModule(database, noiseChannel) }) {
             launch {
                 handleWebSocketConversation("/") { _, outgoing ->
-                    val level = getJsonMapper().writeValueAsString(noise)
+                    val level = JSON.writeValueAsString(noise)
                     outgoing.send(Frame.Text(level))
                 }
             }

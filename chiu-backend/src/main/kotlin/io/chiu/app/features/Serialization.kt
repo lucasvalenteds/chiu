@@ -15,7 +15,7 @@ fun Application.enableJsonSerialization() {
     }
 }
 
-fun getJsonMapper(): ObjectMapper = jacksonObjectMapper().setup()
+val JSON: ObjectMapper = jacksonObjectMapper().setup()
 
 private fun ObjectMapper.setup(): ObjectMapper {
     registerModule(JavaTimeModule())

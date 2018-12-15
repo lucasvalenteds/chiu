@@ -11,7 +11,7 @@ import io.chiu.app.features.enableHTTPSOnly
 import io.chiu.app.features.enableJsonSerialization
 import io.chiu.app.features.enableLogging
 import io.chiu.app.features.enableWebSockets
-import io.chiu.app.features.getJsonMapper
+import io.chiu.app.features.JSON
 import io.chiu.app.features.serveFrontEnd
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -61,16 +61,14 @@ fun Application.module(
         webSocket("/") {
             while (true) {
                 try {
-                    val payload = incoming.receive() as Frame.Text
-
-                    val level = getJsonMapper().readValue<NoiseLevel>(payload.readText())
-                    val report = NoiseReport(ObjectId().toString(), level.level, Date.from(Instant.now()))
-                    val sseEvent = NoiseEvent("noise", report)
+                    val report = NoiseReport(
+                        id = ObjectId().toString(),
+                        level = JSON.readValue<NoiseLevel>((incoming.receive() as Frame.Text).readText()).level,
+                        timestamp = Date.from(Instant.now())
+                    )
 
                     database.saveNoiseReport(report)
-                    noiseChannel.send(sseEvent)
-
-                    log.trace(sseEvent.toString())
+                    noiseChannel.send(NoiseEvent("noise", report))
                 } catch (exception: ClosedReceiveChannelException) {
                     log.info(exception.message)
                     break
@@ -82,7 +80,7 @@ fun Application.module(
             call.respondTextWriter(contentType = ContentType.parse("text/event-stream")) {
                 for (sseEvent in noiseChannel) {
                     write("event: ${sseEvent.event}\n")
-                    write("data: ${getJsonMapper().writeValueAsString(sseEvent.data)}\n")
+                    write("data: ${JSON.writeValueAsString(sseEvent.data)}\n")
                     write("\n")
                     flush()
                     log.trace(sseEvent.toString())
