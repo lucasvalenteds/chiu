@@ -20,6 +20,7 @@ All changes in the code must be made in a separated Git branch other than `maste
 | `chiu-frontend` | Website to consume data from the back-end |
 | `chiu-client-arduino` | Code to be uploaded to the device |
 | `chiu-client-spam` | App to simulate the device for testing |
+| `chiu-testing` | Load tests to the back-end |
 
 ## Files
 
