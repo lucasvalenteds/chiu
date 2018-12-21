@@ -12,11 +12,13 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
+    "dotenv": "^6.2.0",
     "eventsource": "^1.0.7",
     "websocket": "^1.0.28",
     "ws": "^6.1.2"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.0",
     "@types/eventsource": "^1.0.2",
     "@types/node": "^10.9.4",
     "@types/websocket": "0.0.40",

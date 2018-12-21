@@ -1,5 +1,10 @@
-import { client as WebSocket, connection, IMessage } from "websocket";
+import dotenv from "dotenv";
 import EventSource from "eventsource";
+import { client as WebSocket, connection, IMessage } from "websocket";
+
+if (process.env.NODE_ENV === "prod") {
+    dotenv.load();
+}
 
 const serverUrlToReport: string = process.env.WS_URL || "ws://localhost:8080/";
 const serverUrlToListen: string = process.env.API_URL || "http://localhost:8080/listen";
@@ -20,8 +25,8 @@ socket.on("connect", (ws: connection) => {
     });
 
     setInterval(() => ws.sendUTF(JSON.stringify({
-        level: Math.floor(Math.random() * 100)
-    })), 100);
+        level: Math.floor(Math.random() * 100),
+    })), 250);
 });
 socket.connect(serverUrlToReport);
 
