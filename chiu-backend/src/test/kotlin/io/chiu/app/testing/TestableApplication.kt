@@ -7,13 +7,16 @@ import io.ktor.application.Application
 import io.ktor.config.MapApplicationConfig
 import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 
+@ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 @KtorExperimentalAPI
 fun Application.testableModule(
     database: Database = InMemoryDatabase(),
-    noiseChannel: Channel<NoiseEvent> = Channel(),
+    noiseChannel: BroadcastChannel<NoiseEvent> = BroadcastChannel(Channel.CONFLATED),
     frontEndFolder: String = "frontend",
     frontEndIndex: ByteArray = ClassLoader.getSystemResourceAsStream("$frontEndFolder/index.html").readBytes()
 ) {

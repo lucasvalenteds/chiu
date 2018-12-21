@@ -34,6 +34,7 @@ import io.ktor.util.KtorExperimentalAPI
 import io.ktor.websocket.webSocket
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.channels.ClosedSendChannelException
@@ -55,7 +56,7 @@ fun Application.module(
             .getDatabase(environment.config.property("database.name").getString())
             .getCollection("noises")
     ),
-    noiseChannel: Channel<NoiseEvent> = Channel(),
+    noiseChannel: BroadcastChannel<NoiseEvent> = BroadcastChannel(Channel.CONFLATED),
     frontEndFolder: String = environment.config.property("frontend.folder").getString(),
     frontEndIndex: ByteArray = ClassLoader.getSystemResourceAsStream("$frontEndFolder/index.html").readBytes()
 ) {
@@ -80,19 +81,19 @@ fun Application.module(
                     database.saveNoiseReport(report)
                     noiseChannel.send(NoiseEvent("noise", report))
                 } catch (exception: ClosedReceiveChannelException) {
-                    log.info(exception.message)
+                    log.info("101:", exception.message)
                     close(CloseReason(CloseReason.Codes.NORMAL, "Client closed the connection"))
                 } catch (exception: JsonParseException) {
-                    log.info(exception.message)
+                    log.info("102:", exception.message)
                     close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Payload sent has syntax error"))
                 } catch (exception: JsonMappingException) {
-                    log.info(exception.message)
+                    log.info("103:", exception.message)
                     close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Payload doesn't have valid content"))
                 } catch (exception: MongoException) {
-                    log.error(exception.message)
+                    log.error("104:", exception.message)
                     close(CloseReason(CloseReason.Codes.TRY_AGAIN_LATER, "Database is not available right now"))
                 } catch (exception: ClosedSendChannelException) {
-                    log.error(exception.message)
+                    log.error("105:", exception.message)
                     close(CloseReason(CloseReason.Codes.UNEXPECTED_CONDITION, "Internal server error"))
                 }
             }
