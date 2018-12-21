@@ -80,6 +80,7 @@ fun Application.module(
 
                     database.saveNoiseReport(report)
                     noiseChannel.send(NoiseEvent("noise", report))
+                    outgoing.send(Frame.Text("""{"status":"OK"}"""))
                 } catch (exception: ClosedReceiveChannelException) {
                     log.info("101: " + exception.message)
                     close(CloseReason(CloseReason.Codes.NORMAL, "Client closed the connection"))
