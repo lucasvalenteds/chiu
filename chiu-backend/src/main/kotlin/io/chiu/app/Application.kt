@@ -81,19 +81,19 @@ fun Application.module(
                     database.saveNoiseReport(report)
                     noiseChannel.send(NoiseEvent("noise", report))
                 } catch (exception: ClosedReceiveChannelException) {
-                    log.info("101:", exception.message)
+                    log.info("101: " + exception.message)
                     close(CloseReason(CloseReason.Codes.NORMAL, "Client closed the connection"))
                 } catch (exception: JsonParseException) {
-                    log.info("102:", exception.message)
+                    log.error("102: " + exception.message)
                     close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Payload sent has syntax error"))
                 } catch (exception: JsonMappingException) {
-                    log.info("103:", exception.message)
+                    log.error("103: " + exception.message)
                     close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Payload doesn't have valid content"))
                 } catch (exception: MongoException) {
-                    log.error("104:", exception.message)
+                    log.error("104: " + exception.message)
                     close(CloseReason(CloseReason.Codes.TRY_AGAIN_LATER, "Database is not available right now"))
                 } catch (exception: ClosedSendChannelException) {
-                    log.error("105:", exception.message)
+                    log.error("105: " + exception.message)
                     close(CloseReason(CloseReason.Codes.UNEXPECTED_CONDITION, "Internal server error"))
                 }
             }
