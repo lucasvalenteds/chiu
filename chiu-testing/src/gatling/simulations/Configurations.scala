@@ -5,6 +5,10 @@ import io.gatling.http.protocol.HttpProtocolBuilder
 
 object Configurations {
   val configurationFile: Config = ConfigFactory.load()
+
   val httpConfiguration: HttpProtocolBuilder =
     http.baseUrl(configurationFile.getString("chiu.api.url"))
+
+  val wsConfiguration: HttpProtocolBuilder =
+    http.wsBaseUrl(configurationFile.getString("chiu.ws.url"))
 }
