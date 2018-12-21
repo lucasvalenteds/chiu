@@ -1,4 +1,5 @@
 import com.diffplug.gradle.spotless.SpotlessExtension
+import com.github.lkishalmi.gradle.gatling.GatlingPluginExtension
 
 val versionGatling: String by project
 val versionNetty: String by project
@@ -24,6 +25,21 @@ dependencies {
     implementation("io.gatling:gatling-http:$versionGatling")
     implementation("io.gatling.highcharts:gatling-charts-highcharts:$versionGatling")
     implementation("io.netty:netty-tcnative-boringssl-static:$versionNetty")
+}
+
+configure<GatlingPluginExtension> {
+    jvmArgs = listOf(
+        "-server", "-Xmx1G",
+        "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=30",
+        "-XX:G1HeapRegionSize=16m",
+        "-XX:InitiatingHeapOccupancyPercent=75",
+        "-XX:+ParallelRefProcEnabled",
+        "-XX:+PerfDisableSharedMem",
+        "-XX:+OptimizeStringConcat",
+        "-XX:+HeapDumpOnOutOfMemoryError",
+        "-Djava.net.preferIPv4Stack=true",
+        "-Djava.net.preferIPv6Addresses=false"
+    )
 }
 
 configure<SpotlessExtension> {

@@ -8,8 +8,7 @@ import scala.concurrent.duration._
 
 class ListeningSimulation extends Simulation {
 
-  val httpConf: HttpProtocolBuilder = http
-    .baseUrl("http://localhost:8080")
+  val httpConf: HttpProtocolBuilder = Configurations.httpConfiguration
     .header("Accept", "text/event-stream")
 
   val callServer: SseConnectBuilder = sse("listen-open")

@@ -30,6 +30,7 @@ All changes in the code must be made in a separated Git branch other than `maste
 | `.env.production` | Front-end | Settings for production |
 | `.env.development` | Front-end | Settings for development |
 | `.env` | Spam | Settings for production and development |
+| `.application.conf` | Testing | Settings for production and development |
 
 ## Development
 
