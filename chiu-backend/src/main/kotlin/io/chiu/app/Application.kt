@@ -100,7 +100,7 @@ fun Application.module(
         get("/listen") {
             call.response.header(HttpHeaders.CacheControl, "no-cache")
             call.respondTextWriter(contentType = ContentType.parse("text/event-stream")) {
-                for (sseEvent in noiseChannel) {
+                noiseChannel.consumeEach { sseEvent ->
                     write("event: ${sseEvent.event}\n")
                     write("data: ${JSON.writeValueAsString(sseEvent.data)}\n")
                     write("\n")
