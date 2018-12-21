@@ -33,15 +33,19 @@ import io.ktor.server.netty.EngineMain
 import io.ktor.util.KtorExperimentalAPI
 import io.ktor.websocket.webSocket
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.channels.ClosedSendChannelException
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.filter
 import org.bson.types.ObjectId
 import java.time.Instant
 import java.util.Date
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
+@ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 @KtorExperimentalAPI
 @Suppress("unused")
@@ -65,11 +69,11 @@ fun Application.module(
 
     routing {
         webSocket("/") {
-            while (true) {
+            incoming.filter { it is Frame.Text }.consumeEach {
                 try {
                     val report = NoiseReport(
                         id = ObjectId().toString(),
-                        level = JSON.readValue<NoiseLevel>((incoming.receive() as Frame.Text).readText()).level,
+                        level = JSON.readValue<NoiseLevel>((it as Frame.Text).readText()).level,
                         timestamp = Date.from(Instant.now())
                     )
 
@@ -78,20 +82,18 @@ fun Application.module(
                 } catch (exception: ClosedReceiveChannelException) {
                     log.info(exception.message)
                     close(CloseReason(CloseReason.Codes.NORMAL, "Client closed the connection"))
-                    break
                 } catch (exception: JsonParseException) {
                     log.info(exception.message)
                     close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Payload sent has syntax error"))
                 } catch (exception: JsonMappingException) {
                     log.info(exception.message)
-                    close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Payload sent does not have valid content"))
+                    close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Payload doesn't have valid content"))
                 } catch (exception: MongoException) {
                     log.error(exception.message)
-                    close(CloseReason(CloseReason.Codes.TRY_AGAIN_LATER, "Database is not available at the moment"))
+                    close(CloseReason(CloseReason.Codes.TRY_AGAIN_LATER, "Database is not available right now"))
                 } catch (exception: ClosedSendChannelException) {
                     log.error(exception.message)
                     close(CloseReason(CloseReason.Codes.UNEXPECTED_CONDITION, "Internal server error"))
-                    break
                 }
             }
         }
