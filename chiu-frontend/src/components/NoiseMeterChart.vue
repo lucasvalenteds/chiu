@@ -1,11 +1,12 @@
 <template>
   <div>
     <v-alert
+      id="noise-meter-error"
       :value="showError"
       type="warning"
       class="black--text"
     >{{ $t("noise.meter.chart.noise.error") }}</v-alert>
-    <ve-gauge :data="chartData" :settings="chartSettings"></ve-gauge>
+    <ve-gauge id="noise-meter-chart" :data="chartData" :settings="chartSettings"></ve-gauge>
   </div>
 </template>
 
