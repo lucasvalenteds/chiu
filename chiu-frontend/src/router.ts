@@ -10,6 +10,9 @@ export default new Router({
     {
       path: "/",
       name: "home",
+      props: {
+        apiUrl: process.env.VUE_APP_API_URL + "/listen",
+      },
       component: () => import("@/views/Home.vue"),
     },
   ],

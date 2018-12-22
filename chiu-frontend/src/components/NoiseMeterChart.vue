@@ -19,7 +19,14 @@ export interface Noise {
   timestamp: string;
 }
 
-@Component
+@Component({
+  props: {
+    apiUrl: {
+      type: String,
+      required: true,
+    },
+  },
+})
 export default class NoiseMeterChart extends Vue {
   public chartData = {
     columns: ["type", "value"],
@@ -51,10 +58,10 @@ export default class NoiseMeterChart extends Vue {
   }
 
   public showError: boolean = true;
-  public url: string = process.env.VUE_APP_API_URL + "/listen";
-  public noiseSource: EventSource = new EventSource(this.url);
+  public noiseSource?: EventSource;
 
   public created(): void {
+    this.noiseSource = new EventSource(this.$props.apiUrl);
     this.noiseSource.onerror = (event: MessageEvent) => {
       this.chartData.rows[0].value = 0;
       this.showError = true;
@@ -62,7 +69,7 @@ export default class NoiseMeterChart extends Vue {
   }
 
   public mounted(): void {
-    this.noiseSource.addEventListener("noise", (event: Event) => {
+    this.noiseSource!.addEventListener("noise", (event: Event) => {
       const noise: Noise = JSON.parse((event as MessageEvent).data);
 
       this.chartData.rows[0].value = noise.level;
@@ -71,7 +78,7 @@ export default class NoiseMeterChart extends Vue {
   }
 
   public destroyed(): void {
-    this.noiseSource.close();
+    this.noiseSource!.close();
   }
 }
 </script>

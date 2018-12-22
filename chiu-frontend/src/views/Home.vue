@@ -8,7 +8,7 @@
             <h3 class="headline">{{ $t("noise.meter.chart.noise.title") }}</h3>
           </v-card-title>
           <v-divider></v-divider>
-          <NoiseMeterChart/>
+          <NoiseMeterChart :apiUrl="apiUrl"/>
         </v-card>
       </v-flex>
       <v-flex xs12 sm6 lg4>
@@ -42,6 +42,12 @@ import Component from "vue-class-component";
   components: {
     NoiseLevelsTable,
     NoiseMeterChart,
+  },
+  props: {
+    apiUrl: {
+      type: String,
+      required: true,
+    },
   },
 })
 export default class Home extends Vue {}
