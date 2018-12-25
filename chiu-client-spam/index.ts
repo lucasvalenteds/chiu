@@ -3,6 +3,7 @@ import EventSource from "eventsource";
 import { client as WebSocket, connection, IMessage } from "websocket";
 
 if (process.env.NODE_ENV === "prod") {
+    console.log("Loading variables from `.env` file");
     dotenv.load();
 }
 
