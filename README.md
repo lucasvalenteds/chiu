@@ -12,4 +12,4 @@ It uses an [Arduino](https://arduino.cc) to capture the noise level in decibels 
 
 More details about development environment and build instructions are available in the file [CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
-![Website showing noise level in real-time using a chart](./docs/assets/preview.gif)
+<img width="320px" alt="Website showing noise level in real-time using a chart" src="./docs/assets/preview.gif"/>
