@@ -14,4 +14,6 @@ More details about development environment and build instructions are available 
 
 ## Preview
 
-<img width="320px" alt="Website showing noise level in real-time using a chart" src="./docs/assets/preview.gif"/>
+| Noise level meter | Reference values |
+| :---: | :---: |
+| ![Website showing noise level in real-time using a chart](./docs/assets/preview-meter.gif) | ![Table with common noise levels for comparison](./docs/assets/preview-level.png) |
