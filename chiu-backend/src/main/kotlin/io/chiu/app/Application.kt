@@ -12,7 +12,6 @@ import io.chiu.app.features.JSON
 import io.chiu.app.features.enableCORS
 import io.chiu.app.features.enableExceptionHandling
 import io.chiu.app.features.enableHTTPSOnly
-import io.chiu.app.features.enableJsonSerialization
 import io.chiu.app.features.enableLogging
 import io.chiu.app.features.enableWebSockets
 import io.chiu.app.features.serveFrontEnd
@@ -60,7 +59,6 @@ fun Application.module(
     frontEndFolder: String = environment.config.property("frontend.folder").getString(),
     frontEndIndex: ByteArray = ClassLoader.getSystemResourceAsStream("$frontEndFolder/index.html").readBytes()
 ) {
-    enableJsonSerialization()
     enableLogging()
     enableCORS()
     onEnvironment(production = {

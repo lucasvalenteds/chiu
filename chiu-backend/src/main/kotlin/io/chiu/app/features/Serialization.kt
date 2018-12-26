@@ -4,16 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import io.ktor.application.Application
-import io.ktor.application.install
-import io.ktor.features.ContentNegotiation
-import io.ktor.jackson.jackson
-
-fun Application.enableJsonSerialization() {
-    install(ContentNegotiation) {
-        jackson { setup() }
-    }
-}
 
 val JSON: ObjectMapper = jacksonObjectMapper().setup()
 
