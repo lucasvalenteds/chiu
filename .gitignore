@@ -1,2 +1,4 @@
 private/
 **.docker/
+public/
+input/
