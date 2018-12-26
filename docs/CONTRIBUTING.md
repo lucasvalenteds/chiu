@@ -2,7 +2,7 @@
 
 ## Feedback
 
-Please [open an issue](https://github.com/lucasvalenteds/chiu/issues/new) to share your opinion, report bugs and discuss features.
+Please [open an issue](https://gitlab.com/lucasvalenteds/chiu/issues/new) to share your opinion, report bugs and discuss features.
 
 ## Versioning
 
@@ -17,9 +17,9 @@ All changes in the code must be made in a separated Git branch other than `maste
 | Folder | Description |
 | :--- | :--- |
 | `chiu-backend` | Server side code to handle persistence and provide data to clients |
-| `chiu-frontend` | Website to consume data from the back-end |
 | `chiu-client-arduino` | Code to be uploaded to the device |
 | `chiu-client-spam` | App to simulate the device for testing |
+| `chiu-frontend` | Website to consume data from the back-end |
 | `chiu-testing` | Load tests to the back-end |
 
 ## Files
