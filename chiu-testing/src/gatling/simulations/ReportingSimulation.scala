@@ -23,5 +23,13 @@ class ReportingSimulation extends Simulation {
     }
     .exec(ws("report").close)
 
-  setUp(reportingScenario.inject(atOnceUsers(30))).protocols(wsConf)
+  setUp(
+    reportingScenario
+      .inject(
+        incrementConcurrentUsers(5)
+          .times(5)
+          .eachLevelLasting(10.seconds)
+          .separatedByRampsLasting(10.seconds)
+          .startingFrom(10)
+      )).protocols(wsConf)
 }

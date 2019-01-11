@@ -24,7 +24,15 @@ class ListeningSimulation extends Simulation {
     .pause(30.seconds)
     .exec(callServer)
 
-  setUp(listeningScenario.inject(atOnceUsers(50)))
+  setUp(
+    listeningScenario
+      .inject(
+        incrementConcurrentUsers(5)
+          .times(5)
+          .eachLevelLasting(10.seconds)
+          .separatedByRampsLasting(10.seconds)
+          .startingFrom(10)
+      ))
     .assertions(
       details("listen-open").successfulRequests.percent.gte(98)
     )
