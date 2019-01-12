@@ -3,18 +3,6 @@ import com.heroku.sdk.gradle.HerokuPluginExtension
 import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val herokuAppName: String by project
-
-val versionJackson: String by project
-val versionKotlinCoroutines: String by project
-val versionKotlinStdlib: String by project
-val versionKotlinTest: String by project
-val versionKtor: String by project
-val versionLogback: String by project
-val versionMockk: String by project
-val versionMongoDbDriver: String by project
-val versionStrikt: String by project
-
 plugins {
     application
     kotlin("jvm") version "1.3.11"
@@ -36,22 +24,22 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versionKotlinStdlib")
-    implementation("io.ktor:ktor-server-netty:$versionKtor")
-    implementation("ch.qos.logback:logback-classic:$versionLogback")
-    implementation("io.ktor:ktor-server-core:$versionKtor")
-    implementation("io.ktor:ktor-server-host-common:$versionKtor")
-    implementation("io.ktor:ktor-websockets:$versionKtor")
-    testImplementation("io.ktor:ktor-server-tests:$versionKtor")
-    implementation("com.fasterxml.jackson.core:jackson-core:$versionJackson")
-    implementation("com.fasterxml.jackson.core:jackson-databind:$versionJackson")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versionJackson")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$versionJackson")
-    implementation("org.mongodb:mongodb-driver-reactivestreams:$versionMongoDbDriver")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$versionKotlinCoroutines")
-    testImplementation("io.mockk:mockk:$versionMockk")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:$versionKotlinTest")
-    testImplementation("io.strikt:strikt-core:$versionStrikt")
+    implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", extra["version.kotlin"].toString())
+    implementation("io.ktor", "ktor-server-netty", extra["version.ktor"].toString())
+    implementation("ch.qos.logback", "logback-classic", extra["version.logback"].toString())
+    implementation("io.ktor", "ktor-server-core", extra["version.ktor"].toString())
+    implementation("io.ktor", "ktor-server-host-common", extra["version.ktor"].toString())
+    implementation("io.ktor", "ktor-websockets", extra["version.ktor"].toString())
+    testImplementation("io.ktor", "ktor-server-tests", extra["version.ktor"].toString())
+    implementation("com.fasterxml.jackson.core", "jackson-core", extra["version.jackson"].toString())
+    implementation("com.fasterxml.jackson.core", "jackson-databind", extra["version.jackson"].toString())
+    implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", extra["version.jackson"].toString())
+    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", extra["version.jackson"].toString())
+    implementation("org.mongodb", "mongodb-driver-reactivestreams", extra["version.mongodb"].toString())
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactive", extra["version.coroutines"].toString())
+    testImplementation("io.mockk", "mockk", extra["version.mockk"].toString())
+    testImplementation("io.kotlintest", "kotlintest-runner-junit5", extra["version.kotlintest"].toString())
+    testImplementation("io.strikt", "strikt-core", extra["version.strikt"].toString())
 }
 
 tasks.withType<Test> {
@@ -64,7 +52,7 @@ val jarFilePath = shadowJar.destinationDir
     .resolve(shadowJar.archiveName)
 
 configure<HerokuPluginExtension> {
-    appName = herokuAppName
+    appName = extra["heroku.appName"].toString()
     includes = listOf(jarFilePath.toString())
     includeBuildDir = true
     processTypes = mapOf("web" to "java -jar $jarFilePath")
