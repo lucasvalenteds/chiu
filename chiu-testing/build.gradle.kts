@@ -1,11 +1,6 @@
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.github.lkishalmi.gradle.gatling.GatlingPluginExtension
 
-val versionGatling: String by project
-val versionNetty: String by project
-val versionScala: String by project
-val versionSlf4j: String by project
-
 plugins {
     java
     scala
@@ -18,13 +13,13 @@ repositories {
 }
 
 dependencies {
-    implementation("org.scala-lang:scala-library:$versionScala")
-    implementation("org.slf4j:slf4j-nop:$versionSlf4j")
-    implementation("io.gatling:gatling-app:$versionGatling")
-    implementation("io.gatling:gatling-core:$versionGatling")
-    implementation("io.gatling:gatling-http:$versionGatling")
-    implementation("io.gatling.highcharts:gatling-charts-highcharts:$versionGatling")
-    implementation("io.netty:netty-tcnative-boringssl-static:$versionNetty")
+    implementation("org.scala-lang", "scala-library", extra["version.scala"].toString())
+    implementation("org.slf4j", "slf4j-nop", extra["version.slf4j"].toString())
+    implementation("io.gatling", "gatling-app", extra["version.gatling"].toString())
+    implementation("io.gatling", "gatling-core", extra["version.gatling"].toString())
+    implementation("io.gatling", "gatling-http", extra["version.gatling"].toString())
+    implementation("io.gatling.highcharts", "gatling-charts-highcharts", extra["version.gatling"].toString())
+    implementation("io.netty", "netty-tcnative-boringssl-static", extra["version.netty"].toString())
 }
 
 configure<GatlingPluginExtension> {
