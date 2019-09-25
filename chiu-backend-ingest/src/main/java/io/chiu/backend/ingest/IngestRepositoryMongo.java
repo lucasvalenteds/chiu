@@ -21,7 +21,7 @@ public class IngestRepositoryMongo implements IngestRepository {
     @Override
     public Mono<SensorData> save(SensorData data) {
         Document document = new Document()
-            .append("_id", data.getId())
+            .append("_id", data.getId().toString())
             .append("level", data.getLevel());
 
         Publisher<Success> result = client.getDatabase("chiu")
