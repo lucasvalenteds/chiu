@@ -29,8 +29,8 @@ public class IngestRepositoryMongo implements IngestRepository {
             .insertOne(document);
 
         return Mono.from(result)
-            .doOnNext(log::info)
             .doOnError(log::error)
-            .then(Mono.just(data));
+            .then(Mono.just(data))
+            .doOnNext(log::info);
     }
 }
