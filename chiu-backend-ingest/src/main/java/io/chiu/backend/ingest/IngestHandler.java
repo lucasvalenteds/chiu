@@ -13,6 +13,12 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
 
     private static final Logger log = LogManager.getLogger(IngestHandler.class);
 
+    private final IngestRepository repository;
+
+    public IngestHandler(IngestRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public Publisher<Void> apply(WebsocketInbound in, WebsocketOutbound out) {
         Flux<String> input = in.receive()

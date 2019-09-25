@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.netty.DisposableServer;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.http.server.HttpServer;
@@ -16,7 +17,7 @@ class IngestHandlerTest {
 
     private HttpServer server = HttpServer.create()
         .port(serverPort)
-        .route(router -> router.ws(endpoint, new IngestHandler()));
+        .route(router -> router.ws(endpoint, new IngestHandler(data -> Mono.empty())));
 
     private final HttpClient.WebsocketSender client = HttpClient.create()
         .baseUrl("ws://localhost:" + serverPort)
