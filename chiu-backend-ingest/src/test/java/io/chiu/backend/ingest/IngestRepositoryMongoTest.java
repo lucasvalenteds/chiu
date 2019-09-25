@@ -28,6 +28,7 @@ class IngestRepositoryMongoTest {
         Mockito.when(sensorData.getLevel()).thenReturn(65);
 
         StepVerifier.create(repository.save(sensorData))
+            .expectNextCount(1)
             .expectComplete()
             .verify();
 

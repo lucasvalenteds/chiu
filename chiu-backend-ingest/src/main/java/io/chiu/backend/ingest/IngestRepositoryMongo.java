@@ -19,7 +19,7 @@ public class IngestRepositoryMongo implements IngestRepository {
     }
 
     @Override
-    public Mono<Void> save(SensorData data) {
+    public Mono<SensorData> save(SensorData data) {
         Document document = new Document()
             .append("_id", data.getId())
             .append("level", data.getLevel());
@@ -31,6 +31,6 @@ public class IngestRepositoryMongo implements IngestRepository {
         return Mono.from(result)
             .doOnNext(log::info)
             .doOnError(log::error)
-            .thenEmpty(Mono.empty());
+            .then(Mono.just(data));
     }
 }

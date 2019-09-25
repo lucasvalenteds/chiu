@@ -4,5 +4,5 @@ import reactor.core.publisher.Mono;
 
 public interface IngestRepository {
 
-    Mono<Void> save(SensorData data);
+    Mono<SensorData> save(SensorData data);
 }
