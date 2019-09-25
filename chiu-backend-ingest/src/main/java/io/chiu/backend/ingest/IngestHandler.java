@@ -1,5 +1,6 @@
 package io.chiu.backend.ingest;
 
+import java.util.UUID;
 import java.util.function.BiFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +24,11 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
     public Publisher<Void> apply(WebsocketInbound in, WebsocketOutbound out) {
         Flux<String> input = in.receive()
             .asString()
-            .take(1);
+            .take(1)
+            .map(Integer::parseInt)
+            .map(it -> new SensorData(UUID.randomUUID(), it))
+            .flatMap(repository::save)
+            .map(SensorData::toString);
 
         Mono<String> output = Mono.just("OK");
 
