@@ -23,6 +23,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core", "jackson-databind", properties["version.jackson"].toString())
     implementation("org.apache.logging.log4j", "log4j-api", properties["version.log4j"].toString())
     implementation("org.apache.logging.log4j", "log4j-core", properties["version.log4j"].toString())
+    implementation("org.slf4j", "slf4j-simple", "2.0.0-alpha0")
     implementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
     testImplementation("com.jayway.jsonpath", "json-path", properties["version.jsonpath"].toString())
     testImplementation("io.projectreactor", "reactor-test", properties["version.reactor"].toString())
