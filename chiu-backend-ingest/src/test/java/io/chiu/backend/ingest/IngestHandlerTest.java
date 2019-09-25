@@ -43,6 +43,7 @@ class IngestHandlerTest {
 
         StepVerifier.create(response)
             .expectNext("Hello World!")
+            .expectNextCount(2)
             .expectComplete()
             .verify();
     }

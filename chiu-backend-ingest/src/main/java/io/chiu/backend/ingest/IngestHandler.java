@@ -10,6 +10,6 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
 
     @Override
     public Publisher<Void> apply(WebsocketInbound in, WebsocketOutbound out) {
-        return out.sendString(Mono.just("Hello World!"));
+        return out.sendString(Mono.just("Hello World!").repeat(2));
     }
 }
