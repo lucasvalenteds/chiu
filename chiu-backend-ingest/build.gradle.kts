@@ -46,9 +46,29 @@ tasks.withType<Test> {
     useJUnitPlatform()
     testLogging {
         events = setOf(
-            TestLogEvent.PASSED,
-            TestLogEvent.FAILED,
-            TestLogEvent.SKIPPED
+                TestLogEvent.PASSED,
+                TestLogEvent.FAILED,
+                TestLogEvent.SKIPPED
         )
     }
+}
+
+val integrationTest: SourceSet by sourceSets.creating {
+    compileClasspath += sourceSets[sourceSets.main.name].output
+}
+
+configurations {
+    getByName(integrationTest.name + "Implementation") {
+        extendsFrom(configurations.testImplementation.get())
+    }
+
+    getByName(integrationTest.name + "RuntimeOnly") {
+        extendsFrom(configurations.testRuntime.get())
+    }
+}
+
+tasks.register<Test>("itest") {
+    testClassesDirs = sourceSets[integrationTest.name].output.classesDirs
+    classpath += sourceSets[integrationTest.name].runtimeClasspath
+    systemProperty("junit.jupiter.execution.parallel.enabled", true);
 }
