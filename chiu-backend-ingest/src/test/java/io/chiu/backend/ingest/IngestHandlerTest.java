@@ -37,13 +37,17 @@ class IngestHandlerTest {
 
     @Test
     void testItReturnOKForEveryConnection() {
-        Flux<String> response = client.handle((in, out) ->
-            in.receive().asString()
-        );
+        Flux<String> response = client.handle((in, out) -> {
+            Flux<String> dataToSend = Flux.just("1");
+            Flux<String> dataReceived = in.receive().asString().take(1);
+
+            return Flux.mergeSequential(out.sendString(dataToSend), dataReceived)
+                .cast(String.class)
+                .last();
+        });
 
         StepVerifier.create(response)
-            .expectNext("Hello World!")
-            .expectNextCount(2)
+            .expectNext("OK")
             .expectComplete()
             .verify();
     }
