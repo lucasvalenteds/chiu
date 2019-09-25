@@ -1,8 +1,9 @@
 package io.chiu.backend.ingest;
 
+import com.mongodb.reactivestreams.client.MongoClient;
+import com.mongodb.reactivestreams.client.MongoClients;
 import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -18,8 +19,29 @@ class AppConfiguration {
     private Environment environment;
 
     @Bean
-    Consumer<HttpServerRoutes> router() {
+    MongoClient mongoClient() {
+        return MongoClients.create(environment.getProperty(
+            "database.url",
+            String.class,
+            "mongodb://admin:password@localhost:27017"
+        ));
+    }
+
+    @Bean
+    IngestRepository ingestRepository(MongoClient client) {
+        return new IngestRepositoryMongo(client);
+    }
+
+    @Bean
+    IngestHandler ingestHandler(IngestRepository repository) {
+        return new IngestHandler(repository);
+    }
+
+    @Bean
+    Consumer<HttpServerRoutes> router(IngestHandler ingestHandler) {
         return router -> {
+            router
+                .ws("/", ingestHandler);
         };
     }
 
