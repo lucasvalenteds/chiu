@@ -21,6 +21,9 @@ public class SensorData {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "SensorData{" +
+            "id=" + id +
+            ", level=" + level +
+            '}';
     }
 }
