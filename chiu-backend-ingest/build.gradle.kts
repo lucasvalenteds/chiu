@@ -48,7 +48,8 @@ tasks.withType<Test> {
         events = setOf(
                 TestLogEvent.PASSED,
                 TestLogEvent.FAILED,
-                TestLogEvent.SKIPPED
+                TestLogEvent.SKIPPED,
+                TestLogEvent.STANDARD_ERROR
         )
     }
 }
