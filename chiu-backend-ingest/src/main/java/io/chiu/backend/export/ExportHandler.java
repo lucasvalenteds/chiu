@@ -7,14 +7,13 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.Duration;
-import java.util.Random;
 import java.util.UUID;
 import java.util.function.BiFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactivestreams.Publisher;
 import org.springframework.http.codec.ServerSentEvent;
+import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 import reactor.netty.http.server.HttpServerRequest;
 import reactor.netty.http.server.HttpServerResponse;
@@ -23,19 +22,19 @@ public class ExportHandler implements BiFunction<HttpServerRequest, HttpServerRe
 
     private static final Logger log = LogManager.getLogger(ExportHandler.class);
 
-    private final Random random = new Random();
     private final ObjectMapper objectMapper;
+    private final Flux<SensorData> eventBus;
 
-    public ExportHandler(ObjectMapper objectMapper) {
+    public ExportHandler(ObjectMapper objectMapper, EmitterProcessor<SensorData> eventBus) {
         this.objectMapper = objectMapper;
+        this.eventBus = eventBus;
     }
 
     @Override
     public Publisher<Void> apply(HttpServerRequest request, HttpServerResponse response) {
         return response.sse()
             .send(
-                Flux.interval(Duration.ofSeconds(1), Duration.ofSeconds(10))
-                    .map(it -> new SensorData(UUID.randomUUID(), random.nextInt()))
+                Flux.from(eventBus)
                     .map(Throwing.function(objectMapper::writeValueAsString))
                     .doOnNext(log::info)
                     .map(this::toEvent)
