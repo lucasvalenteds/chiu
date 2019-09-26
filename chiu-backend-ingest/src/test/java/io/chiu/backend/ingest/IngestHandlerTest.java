@@ -1,8 +1,10 @@
 package io.chiu.backend.ingest;
 
+import io.chiu.backend.SensorData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.DisposableServer;
@@ -15,9 +17,11 @@ class IngestHandlerTest {
     private final int serverPort = 8080;
     private final String endpoint = "/ingest";
 
+    private IngestRepository repository = data -> Mono.empty();
+    private EmitterProcessor<SensorData> eventBus = EmitterProcessor.create();
     private HttpServer server = HttpServer.create()
         .port(serverPort)
-        .route(router -> router.ws(endpoint, new IngestHandler(data -> Mono.empty())));
+        .route(router -> router.ws(endpoint, new IngestHandler(repository, eventBus)));
 
     private final HttpClient.WebsocketSender client = HttpClient.create()
         .baseUrl("ws://localhost:" + serverPort)

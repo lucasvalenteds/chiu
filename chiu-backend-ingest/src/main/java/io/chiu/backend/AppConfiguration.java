@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import reactor.core.publisher.EmitterProcessor;
 import reactor.netty.http.server.HttpServer;
 import reactor.netty.http.server.HttpServerRoutes;
 
@@ -21,6 +22,11 @@ class AppConfiguration {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    EmitterProcessor<SensorData> eventBus() {
+        return EmitterProcessor.create();
+    }
 
     @Bean
     ConnectionString connectionString() {
@@ -42,8 +48,8 @@ class AppConfiguration {
     }
 
     @Bean
-    IngestHandler ingestHandler(IngestRepository repository) {
-        return new IngestHandler(repository);
+    IngestHandler ingestHandler(IngestRepository repository, EmitterProcessor<SensorData> eventBus) {
+        return new IngestHandler(repository, eventBus);
     }
 
     @Bean
