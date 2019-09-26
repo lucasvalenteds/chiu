@@ -64,7 +64,7 @@ class ExportHandlerTest {
             .consumeNextWith(ExportHandlerTest::assertResponse)
             .consumeNextWith(ExportHandlerTest::assertResponse)
             .consumeNextWith(ExportHandlerTest::assertResponse)
-            .expectComplete()
+            .thenCancel()
             .verify();
     }
 
