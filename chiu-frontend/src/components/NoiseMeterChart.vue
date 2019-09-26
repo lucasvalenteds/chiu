@@ -15,9 +15,8 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 export interface Noise {
-  uuid: string;
+  id: string;
   level: number;
-  timestamp: string;
 }
 
 @Component({
