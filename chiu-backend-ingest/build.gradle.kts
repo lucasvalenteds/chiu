@@ -1,8 +1,11 @@
+import com.github.lkishalmi.gradle.gatling.GatlingPluginExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     java
     application
+    scala
+    id("com.github.lkishalmi.gatling") version "3.2.9"
 }
 
 repositories {
@@ -31,6 +34,13 @@ dependencies {
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
     testImplementation("org.mockito", "mockito-core", properties["version.mockito"].toString())
     testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
+
+    implementation("org.scala-lang", "scala-library", properties["version.scala"].toString())
+    implementation("io.netty", "netty-tcnative-boringssl-static", properties["version.netty.ssl"].toString())
+    testImplementation("io.gatling", "gatling-app", properties["version.gatling"].toString())
+    testImplementation("io.gatling", "gatling-core", properties["version.gatling"].toString())
+    testImplementation("io.gatling", "gatling-http", properties["version.gatling"].toString())
+    testImplementation("io.gatling.highcharts", "gatling-charts-highcharts", properties["version.gatling"].toString())
 }
 
 configure<ApplicationPluginConvention> {
@@ -40,6 +50,19 @@ configure<ApplicationPluginConvention> {
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+configure<GatlingPluginExtension> {
+    jvmArgs = listOf(
+            "-server", "-Xmx1G",
+            "-XX:InitiatingHeapOccupancyPercent=75",
+            "-XX:+ParallelRefProcEnabled",
+            "-XX:+PerfDisableSharedMem",
+            "-XX:+OptimizeStringConcat",
+            "-XX:+HeapDumpOnOutOfMemoryError",
+            "-Djava.net.preferIPv4Stack=true",
+            "-Djava.net.preferIPv6Addresses=false"
+    )
 }
 
 tasks.withType<Test> {
