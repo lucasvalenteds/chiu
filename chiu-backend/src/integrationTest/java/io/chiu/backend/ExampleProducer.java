@@ -1,7 +1,7 @@
 package io.chiu.backend;
 
+import com.devskiller.jfairy.Fairy;
 import java.time.Duration;
-import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import reactor.core.publisher.Flux;
@@ -12,11 +12,15 @@ public class ExampleProducer {
     private static final Logger log = LogManager.getLogger(ExampleProducer.class);
 
     public static void main(String[] args) {
-        Random random = new Random();
+        Fairy fairy = Fairy.create();
 
-        Flux<String> numberGenerator = Flux.generate(sink -> {
-            sink.next(String.valueOf(random.nextInt(150)));
-        });
+        Flux<String> numberGenerator = Flux.generate(sink ->
+            sink.next(
+                String.valueOf(
+                    fairy.baseProducer().randomBetween(40, 60)
+                )
+            )
+        );
 
         HttpClient.create()
             .baseUrl("ws://localhost:8080")
@@ -25,7 +29,7 @@ public class ExampleProducer {
             .handle((in, out) -> {
                 out.sendString(
                     numberGenerator
-                        .delayElements(Duration.ofMillis(1))
+                        .delayElements(Duration.ofMillis(250))
                         .doOnNext(log::info)
                 ).then().subscribe();
 
