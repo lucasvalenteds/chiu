@@ -15,6 +15,7 @@ import org.reactivestreams.Publisher;
 import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxProcessor;
 import reactor.netty.http.server.HttpServerRequest;
 import reactor.netty.http.server.HttpServerResponse;
 
@@ -34,11 +35,10 @@ public class ExportHandler implements BiFunction<HttpServerRequest, HttpServerRe
     public Publisher<Void> apply(HttpServerRequest request, HttpServerResponse response) {
         return response.sse()
             .send(
-                Flux.from(eventBus)
+                FluxProcessor.from(eventBus)
+                    .doOnNext(log::info)
                     .map(Throwing.function(objectMapper::writeValueAsString))
-                    .doOnNext(log::info)
                     .map(this::toEvent)
-                    .doOnNext(log::info)
                     .map(this::toSsePayload)
             );
     }
