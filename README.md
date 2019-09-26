@@ -47,3 +47,15 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 
 [node]: https://img.shields.io/badge/node-12-73B657.svg?style=for-the-badge "Node 12"
 [npm]: https://img.shields.io/badge/npm-6-C93B39.svg?style=for-the-badge "NPM 6"
+
+### Hardware
+
+| Description | Command |
+| :--- | :--- |
+| Arduino support for Visual Studio Code | `ext install vscode-arduino` |
+
+| Quantity | Item | Reference |
+| :---: | :--- | :--- |
+| 1 | Arduino board | Arduino Uno |
+| 1 | Ethernet Shield | HansRun w5100 |
+| 1 | Sound meter sensor | KY-038 |
