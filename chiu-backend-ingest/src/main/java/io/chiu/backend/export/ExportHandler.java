@@ -24,7 +24,7 @@ public class ExportHandler implements BiFunction<HttpServerRequest, HttpServerRe
     private static final Logger log = LogManager.getLogger(ExportHandler.class);
 
     private final ObjectMapper objectMapper;
-    private final Flux<SensorData> eventBus;
+    private final EmitterProcessor<SensorData> eventBus;
 
     public ExportHandler(ObjectMapper objectMapper, EmitterProcessor<SensorData> eventBus) {
         this.objectMapper = objectMapper;
