@@ -97,3 +97,13 @@ tasks.register<Test>("itest") {
     classpath += sourceSets[integrationTest.name].runtimeClasspath
     systemProperty("junit.jupiter.execution.parallel.enabled", true);
 }
+
+tasks.register<JavaExec>("runConsumer") {
+   main = "io.chiu.backend.ExampleConsumer"
+   classpath = integrationTest.runtimeClasspath
+}
+
+tasks.register<JavaExec>("runProducer") {
+   main = "io.chiu.backend.ExampleProducer"
+   classpath = integrationTest.runtimeClasspath
+}
