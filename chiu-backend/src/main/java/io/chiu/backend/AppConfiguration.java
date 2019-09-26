@@ -8,6 +8,10 @@ import io.chiu.backend.export.ExportHandler;
 import io.chiu.backend.ingest.IngestHandler;
 import io.chiu.backend.ingest.IngestRepository;
 import io.chiu.backend.ingest.IngestRepositoryMongo;
+import io.netty.handler.codec.http.HttpMethod;
+import io.netty.handler.codec.http.cors.CorsConfig;
+import io.netty.handler.codec.http.cors.CorsConfigBuilder;
+import io.netty.handler.codec.http.cors.CorsHandler;
 import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -74,9 +78,23 @@ class AppConfiguration {
     }
 
     @Bean
-    HttpServer server(Consumer<HttpServerRoutes> router) {
+    CorsConfig corsConfig() {
+        String domain = environment.getProperty("frontend.url", String.class, "http://localhost:8081");
+        return CorsConfigBuilder.forOrigin(domain)
+            .allowedRequestMethods(HttpMethod.GET)
+            .build();
+    }
+
+    @Bean
+    HttpServer server(Consumer<HttpServerRoutes> router, CorsConfig corsConfig) {
         return HttpServer.create()
             .port(environment.getProperty("server.port", Integer.class, 8080))
-            .route(router);
+            .tcpConfiguration(it ->
+                it.doOnConnection(connection -> {
+                    connection.addHandlerLast(new CorsHandler(corsConfig));
+                })
+            )
+            .route(router)
+            .forwarded(true);
     }
 }
