@@ -1,4 +1,4 @@
-package io.chiu.backend.ingest;
+package io.chiu.backend;
 
 import java.time.Duration;
 import org.apache.logging.log4j.LogManager;

@@ -1,5 +1,6 @@
-package io.chiu.backend.ingest;
+package io.chiu.backend;
 
+import io.chiu.backend.ingest.IngestRepository;
 import java.util.Random;
 import java.util.UUID;
 import org.junit.jupiter.api.RepeatedTest;

@@ -1,5 +1,6 @@
 package io.chiu.backend.ingest;
 
+import io.chiu.backend.SensorData;
 import java.util.UUID;
 import java.util.function.BiFunction;
 import org.apache.logging.log4j.LogManager;

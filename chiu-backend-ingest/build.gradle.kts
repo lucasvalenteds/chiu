@@ -34,7 +34,7 @@ dependencies {
 }
 
 configure<ApplicationPluginConvention> {
-    mainClassName = "io.chiu.backend.ingest.Main"
+    mainClassName = "io.chiu.backend.Main"
 }
 
 configure<JavaPluginConvention> {

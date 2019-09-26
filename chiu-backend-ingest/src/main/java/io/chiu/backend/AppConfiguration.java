@@ -1,8 +1,11 @@
-package io.chiu.backend.ingest;
+package io.chiu.backend;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
+import io.chiu.backend.ingest.IngestHandler;
+import io.chiu.backend.ingest.IngestRepository;
+import io.chiu.backend.ingest.IngestRepositoryMongo;
 import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
