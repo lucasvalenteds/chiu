@@ -18,7 +18,7 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 
 ### Back-end
 
-![jdk] ![docker] ![docker-compose]
+![jdk] ![docker] ![compose]
 
 | Description | Command |
 | :--- | :--- |
