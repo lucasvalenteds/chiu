@@ -4,6 +4,7 @@ import io.chiu.backend.SensorData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -41,6 +42,7 @@ class IngestHandlerTest {
     }
 
     @Test
+    @Timeout(1)
     void testItReturnOKForEveryConnection() {
         Flux<String> response = client.handle((in, out) -> {
             Flux<String> dataToSend = Flux.just("1");
@@ -53,7 +55,7 @@ class IngestHandlerTest {
 
         StepVerifier.create(response)
             .expectNext("OK")
-            .expectComplete()
+            .thenCancel()
             .verify();
     }
 }
