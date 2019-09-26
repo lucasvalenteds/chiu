@@ -6,6 +6,7 @@ plugins {
     application
     scala
     id("com.github.lkishalmi.gatling") version "3.2.9"
+    id("com.github.johnrengelman.shadow") version "5.1.0"
 }
 
 repositories {
