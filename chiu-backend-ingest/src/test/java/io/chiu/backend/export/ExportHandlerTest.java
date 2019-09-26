@@ -1,23 +1,16 @@
 package io.chiu.backend.export;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ReadContext;
 import io.netty.handler.codec.http.HttpHeaderNames;
-import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 import reactor.netty.DisposableServer;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.http.server.HttpServer;
 import reactor.test.StepVerifier;
-import reactor.util.function.Tuple3;
 
 class ExportHandlerTest {
 
@@ -42,29 +35,25 @@ class ExportHandlerTest {
 
     @Test
     void testItReturnsSensorDataAsJson() {
-        Mono<Tuple3<Integer, String, String>> data = HttpClient.create()
+        Flux<String> response = HttpClient.create()
             .baseUrl("http://localhost:" + serverPort)
+            .headers(x -> x.set(HttpHeaderNames.ACCEPT, "text/event-stream"))
             .get()
             .uri(endpoint)
-            .responseSingle((response, body) ->
-                Mono.zip(
-                    Mono.just(response.status().code()),
-                    Mono.just(response.responseHeaders().getAsString(HttpHeaderNames.CONTENT_TYPE.toString())),
-                    body.asString().defaultIfEmpty("")
-                )
-            );
+            .responseContent()
+            .retain()
+            .asString()
+            .take(3);
 
-        StepVerifier.create(data)
-            .consumeNextWith(tuple -> {
-                assertEquals(HttpResponseStatus.OK.code(), tuple.getT1());
-                assertEquals(HttpHeaderValues.APPLICATION_JSON.toString(), tuple.getT2());
-                assertNotEquals("", tuple.getT3());
-
-                ReadContext body = JsonPath.parse(tuple.getT3());
-                assertNotNull(body.read("$.id", String.class));
-                assertNotNull(body.read("$.level", String.class));
-            })
+        StepVerifier.create(response)
+            .consumeNextWith(ExportHandlerTest::assertResponse)
+            .consumeNextWith(ExportHandlerTest::assertResponse)
+            .consumeNextWith(ExportHandlerTest::assertResponse)
             .expectComplete()
             .verify();
+    }
+
+    private static void assertResponse(String body) {
+        assertFalse(body.isEmpty());
     }
 }
