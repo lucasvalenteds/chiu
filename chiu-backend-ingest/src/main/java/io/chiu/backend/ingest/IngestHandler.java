@@ -28,7 +28,7 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
     public Publisher<Void> apply(WebsocketInbound in, WebsocketOutbound out) {
         Flux<String> input = in.receive()
             .asString()
-            .take(1)
+            .doOnNext(log::info)
             .map(Integer::parseInt)
             .map(it -> new SensorData(UUID.randomUUID(), it))
             .flatMap(repository::save)
