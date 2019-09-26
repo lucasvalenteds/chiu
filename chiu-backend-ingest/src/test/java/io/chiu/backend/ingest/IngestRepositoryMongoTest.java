@@ -1,5 +1,6 @@
 package io.chiu.backend.ingest;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
 import com.mongodb.reactivestreams.client.MongoDatabase;
@@ -11,16 +12,19 @@ import reactor.test.StepVerifier;
 
 class IngestRepositoryMongoTest {
 
+    private final ConnectionString connectionString = Mockito.mock(ConnectionString.class);
     private final MongoClient client = Mockito.mock(MongoClient.class);
     private final MongoDatabase database = Mockito.mock(MongoDatabase.class);
     private final MongoCollection collection = Mockito.mock(MongoCollection.class);
 
-    private final IngestRepository repository = new IngestRepositoryMongo(client);
+    private final IngestRepository repository = new IngestRepositoryMongo(client, connectionString);
 
     @Test
     void testItCanPersistSensorData() {
         SensorData sensorData = Mockito.mock(SensorData.class);
 
+        Mockito.when(connectionString.getDatabase()).thenReturn("chiu");
+        Mockito.when(connectionString.getCollection()).thenReturn("noise");
         Mockito.when(client.getDatabase("chiu")).thenReturn(database);
         Mockito.when(database.getCollection("noise")).thenReturn(collection);
         Mockito.when(collection.insertOne(Mockito.any())).thenReturn(Subscriber::onComplete);

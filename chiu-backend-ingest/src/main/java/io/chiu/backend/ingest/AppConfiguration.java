@@ -1,5 +1,6 @@
 package io.chiu.backend.ingest;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
 import java.util.function.Consumer;
@@ -19,17 +20,22 @@ class AppConfiguration {
     private Environment environment;
 
     @Bean
-    MongoClient mongoClient() {
-        return MongoClients.create(environment.getProperty(
+    ConnectionString connectionString() {
+        return new ConnectionString(environment.getProperty(
             "database.url",
             String.class,
-            "mongodb://admin:password@localhost:27017"
+            "mongodb://admin:password@localhost:27017/chiu.events"
         ));
     }
 
     @Bean
-    IngestRepository ingestRepository(MongoClient client) {
-        return new IngestRepositoryMongo(client);
+    MongoClient mongoClient(ConnectionString connectionString) {
+        return MongoClients.create(connectionString);
+    }
+
+    @Bean
+    IngestRepository ingestRepository(MongoClient client, ConnectionString connectionString) {
+        return new IngestRepositoryMongo(client, connectionString);
     }
 
     @Bean

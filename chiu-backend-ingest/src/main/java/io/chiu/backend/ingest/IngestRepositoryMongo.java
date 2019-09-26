@@ -1,5 +1,6 @@
 package io.chiu.backend.ingest;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.Success;
 import org.apache.logging.log4j.LogManager;
@@ -13,9 +14,11 @@ public class IngestRepositoryMongo implements IngestRepository {
     private static final Logger log = LogManager.getLogger(IngestRepositoryMongo.class);
 
     private final MongoClient client;
+    private final ConnectionString connectionString;
 
-    public IngestRepositoryMongo(MongoClient client) {
+    public IngestRepositoryMongo(MongoClient client, ConnectionString connectionString) {
         this.client = client;
+        this.connectionString = connectionString;
     }
 
     @Override
@@ -24,8 +27,8 @@ public class IngestRepositoryMongo implements IngestRepository {
             .append("_id", data.getId().toString())
             .append("level", data.getLevel());
 
-        Publisher<Success> result = client.getDatabase("chiu")
-            .getCollection("noise")
+        Publisher<Success> result = client.getDatabase(connectionString.getDatabase())
+            .getCollection(connectionString.getCollection())
             .insertOne(document);
 
         return Mono.from(result)
