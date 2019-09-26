@@ -1,1 +1,1 @@
-rootProject.name = "chiu-backend-ingest"
+rootProject.name = "chiu-backend"
