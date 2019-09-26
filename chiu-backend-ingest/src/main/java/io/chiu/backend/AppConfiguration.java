@@ -1,8 +1,10 @@
 package io.chiu.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
+import io.chiu.backend.export.ExportHandler;
 import io.chiu.backend.ingest.IngestHandler;
 import io.chiu.backend.ingest.IngestRepository;
 import io.chiu.backend.ingest.IngestRepositoryMongo;
@@ -22,6 +24,11 @@ class AppConfiguration {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 
     @Bean
     EmitterProcessor<SensorData> eventBus() {
@@ -53,10 +60,16 @@ class AppConfiguration {
     }
 
     @Bean
-    Consumer<HttpServerRoutes> router(IngestHandler ingestHandler) {
+    ExportHandler exportHandler(ObjectMapper objectMapper, EmitterProcessor<SensorData> eventBus) {
+        return new ExportHandler(objectMapper, eventBus);
+    }
+
+    @Bean
+    Consumer<HttpServerRoutes> router(IngestHandler ingestHandler, ExportHandler exportHandler) {
         return router -> {
             router
-                .ws("/", ingestHandler);
+                .ws("/", ingestHandler)
+                .get("/export", exportHandler);
         };
     }
 
