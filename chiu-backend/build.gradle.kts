@@ -15,8 +15,10 @@ repositories {
 
 dependencies {
     implementation("io.projectreactor", "reactor-core", properties["version.reactor"].toString())
+    testImplementation("io.projectreactor", "reactor-test", properties["version.reactor"].toString())
     implementation("io.projectreactor.netty", "reactor-netty", properties["version.netty"].toString())
     implementation("org.springframework", "spring-context", properties["version.spring"].toString())
+    testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
     implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())
     implementation("com.fasterxml.jackson.core", "jackson-databind", properties["version.jackson"].toString())
     implementation("com.github.fge", "throwing-lambdas", properties["version.throwing"].toString())
@@ -24,11 +26,8 @@ dependencies {
     implementation("org.apache.logging.log4j", "log4j-core", properties["version.log4j"].toString())
     implementation("org.slf4j", "slf4j-simple", properties["version.slf4j"].toString())
     implementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
-    testImplementation("io.projectreactor", "reactor-test", properties["version.reactor"].toString())
-    testImplementation("org.hamcrest", "hamcrest-all", properties["version.hamcrest"].toString())
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
     testImplementation("org.mockito", "mockito-core", properties["version.mockito"].toString())
-    testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
 
     gatling("org.scala-lang", "scala-library", properties["version.scala"].toString())
     gatling("io.netty", "netty-tcnative-boringssl-static", properties["version.netty.ssl"].toString())
