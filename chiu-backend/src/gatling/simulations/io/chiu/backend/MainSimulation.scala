@@ -7,6 +7,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 
 import scala.concurrent.duration._
+import scala.language.postfixOps
 import scala.util.Random
 
 class MainSimulation extends Simulation {
@@ -39,7 +40,7 @@ class MainSimulation extends Simulation {
   setUp(scene.inject(constantUsersPerSec(5) during (1 minutes)))
     .assertions(
       global.responseTime.mean.lte(125),
-      global.successfulRequests.percent.gt(95),
+      global.successfulRequests.percent.gt(95)
     )
     .protocols(protocol)
 }
