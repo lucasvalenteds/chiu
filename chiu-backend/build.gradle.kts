@@ -14,8 +14,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework", "spring-webflux", properties["version.spring"].toString())
-    implementation("org.springframework", "spring-websocket", properties["version.spring"].toString())
     implementation("org.springframework", "spring-context", properties["version.spring"].toString())
     implementation("javax", "javaee-api", properties["version.javax"].toString())
     implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())

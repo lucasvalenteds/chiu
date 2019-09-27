@@ -12,9 +12,7 @@ import java.util.function.BiFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactivestreams.Publisher;
-import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.EmitterProcessor;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxProcessor;
 import reactor.netty.http.server.HttpServerRequest;
 import reactor.netty.http.server.HttpServerResponse;
@@ -44,19 +42,15 @@ public class ExportHandler implements BiFunction<HttpServerRequest, HttpServerRe
     }
 
     private ServerSentEvent<String> toEvent(String sensorData) {
-        return ServerSentEvent.builder(sensorData)
-            .id(UUID.randomUUID().toString())
-            .event("noise")
-            .data(sensorData)
-            .build();
+        return new ServerSentEvent<>(UUID.randomUUID().toString(), "noise", sensorData);
     }
 
     private ByteBuf toSsePayload(ServerSentEvent<String> payload) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            outputStream.write(("id: " + payload.id() + "\n").getBytes());
-            outputStream.write(("event: " + payload.event() + "\n").getBytes());
-            outputStream.write(("data: " + payload.data() + "\n").getBytes());
+            outputStream.write(("id: " + payload.getId() + "\n").getBytes());
+            outputStream.write(("event: " + payload.getEvent() + "\n").getBytes());
+            outputStream.write(("data: " + payload.getData() + "\n").getBytes());
             outputStream.write("\n\n".getBytes());
         } catch (IOException exception) {
             log.error(exception);
