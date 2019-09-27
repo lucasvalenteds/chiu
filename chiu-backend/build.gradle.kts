@@ -20,12 +20,15 @@ dependencies {
     implementation("org.springframework", "spring-context", properties["version.spring"].toString())
     testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
     implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())
+
     implementation("com.fasterxml.jackson.core", "jackson-databind", properties["version.jackson"].toString())
     implementation("com.github.fge", "throwing-lambdas", properties["version.throwing"].toString())
+
     implementation("org.apache.logging.log4j", "log4j-api", properties["version.log4j"].toString())
     implementation("org.apache.logging.log4j", "log4j-core", properties["version.log4j"].toString())
     implementation("org.slf4j", "slf4j-simple", properties["version.slf4j"].toString())
-    implementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
+
+    testImplementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
     testImplementation("org.mockito", "mockito-core", properties["version.mockito"].toString())
 
