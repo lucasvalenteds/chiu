@@ -15,7 +15,6 @@ repositories {
 
 dependencies {
     implementation("org.springframework", "spring-context", properties["version.spring"].toString())
-    implementation("javax", "javaee-api", properties["version.javax"].toString())
     implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())
     implementation("com.github.fge", "throwing-lambdas", properties["version.throwing"].toString())
     implementation("io.projectreactor", "reactor-core", properties["version.reactor"].toString())
