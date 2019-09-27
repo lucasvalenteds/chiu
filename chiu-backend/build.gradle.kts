@@ -24,7 +24,6 @@ dependencies {
     implementation("org.apache.logging.log4j", "log4j-core", properties["version.log4j"].toString())
     implementation("org.slf4j", "slf4j-simple", properties["version.slf4j"].toString())
     implementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
-    testImplementation("com.jayway.jsonpath", "json-path", properties["version.jsonpath"].toString())
     testImplementation("io.projectreactor", "reactor-test", properties["version.reactor"].toString())
     testImplementation("org.hamcrest", "hamcrest-all", properties["version.hamcrest"].toString())
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
