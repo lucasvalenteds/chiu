@@ -36,12 +36,12 @@ dependencies {
     testImplementation("org.mockito", "mockito-core", properties["version.mockito"].toString())
     testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
 
-    implementation("org.scala-lang", "scala-library", properties["version.scala"].toString())
-    implementation("io.netty", "netty-tcnative-boringssl-static", properties["version.netty.ssl"].toString())
-    testImplementation("io.gatling", "gatling-app", properties["version.gatling"].toString())
-    testImplementation("io.gatling", "gatling-core", properties["version.gatling"].toString())
-    testImplementation("io.gatling", "gatling-http", properties["version.gatling"].toString())
-    testImplementation("io.gatling.highcharts", "gatling-charts-highcharts", properties["version.gatling"].toString())
+    gatling("org.scala-lang", "scala-library", properties["version.scala"].toString())
+    gatling("io.netty", "netty-tcnative-boringssl-static", properties["version.netty.ssl"].toString())
+    gatling("io.gatling", "gatling-app", properties["version.gatling"].toString())
+    gatling("io.gatling", "gatling-core", properties["version.gatling"].toString())
+    gatling("io.gatling", "gatling-http", properties["version.gatling"].toString())
+    gatling("io.gatling.highcharts", "gatling-charts-highcharts", properties["version.gatling"].toString())
 }
 
 configure<ApplicationPluginConvention> {
