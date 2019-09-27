@@ -17,8 +17,6 @@ dependencies {
     implementation("org.springframework", "spring-webflux", properties["version.spring"].toString())
     implementation("org.springframework", "spring-websocket", properties["version.spring"].toString())
     implementation("org.springframework", "spring-context", properties["version.spring"].toString())
-    compileOnly("org.projectlombok", "lombok", properties["version.lombok"].toString())
-    annotationProcessor("org.projectlombok", "lombok", properties["version.lombok"].toString())
     implementation("javax", "javaee-api", properties["version.javax"].toString())
     implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())
     implementation("com.github.fge", "throwing-lambdas", properties["version.throwing"].toString())
