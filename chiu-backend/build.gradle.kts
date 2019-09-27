@@ -14,34 +14,30 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework", "spring-webflux", properties["version.spring"].toString())
-    implementation("org.springframework", "spring-websocket", properties["version.spring"].toString())
-    implementation("org.springframework", "spring-context", properties["version.spring"].toString())
-    compileOnly("org.projectlombok", "lombok", properties["version.lombok"].toString())
-    annotationProcessor("org.projectlombok", "lombok", properties["version.lombok"].toString())
-    implementation("javax", "javaee-api", properties["version.javax"].toString())
-    implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())
-    implementation("com.github.fge", "throwing-lambdas", properties["version.throwing"].toString())
     implementation("io.projectreactor", "reactor-core", properties["version.reactor"].toString())
+    testImplementation("io.projectreactor", "reactor-test", properties["version.reactor"].toString())
     implementation("io.projectreactor.netty", "reactor-netty", properties["version.netty"].toString())
+    implementation("org.springframework", "spring-context", properties["version.spring"].toString())
+    testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
+    implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())
+
     implementation("com.fasterxml.jackson.core", "jackson-databind", properties["version.jackson"].toString())
+    implementation("com.github.fge", "throwing-lambdas", properties["version.throwing"].toString())
+
     implementation("org.apache.logging.log4j", "log4j-api", properties["version.log4j"].toString())
     implementation("org.apache.logging.log4j", "log4j-core", properties["version.log4j"].toString())
     implementation("org.slf4j", "slf4j-simple", properties["version.slf4j"].toString())
-    implementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
-    testImplementation("com.jayway.jsonpath", "json-path", properties["version.jsonpath"].toString())
-    testImplementation("io.projectreactor", "reactor-test", properties["version.reactor"].toString())
-    testImplementation("org.hamcrest", "hamcrest-all", properties["version.hamcrest"].toString())
+
+    testImplementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
     testImplementation("org.mockito", "mockito-core", properties["version.mockito"].toString())
-    testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
 
-    implementation("org.scala-lang", "scala-library", properties["version.scala"].toString())
-    implementation("io.netty", "netty-tcnative-boringssl-static", properties["version.netty.ssl"].toString())
-    testImplementation("io.gatling", "gatling-app", properties["version.gatling"].toString())
-    testImplementation("io.gatling", "gatling-core", properties["version.gatling"].toString())
-    testImplementation("io.gatling", "gatling-http", properties["version.gatling"].toString())
-    testImplementation("io.gatling.highcharts", "gatling-charts-highcharts", properties["version.gatling"].toString())
+    gatling("org.scala-lang", "scala-library", properties["version.scala"].toString())
+    gatling("io.netty", "netty-tcnative-boringssl-static", properties["version.netty.ssl"].toString())
+    gatling("io.gatling", "gatling-app", properties["version.gatling"].toString())
+    gatling("io.gatling", "gatling-core", properties["version.gatling"].toString())
+    gatling("io.gatling", "gatling-http", properties["version.gatling"].toString())
+    gatling("io.gatling.highcharts", "gatling-charts-highcharts", properties["version.gatling"].toString())
 }
 
 configure<ApplicationPluginConvention> {

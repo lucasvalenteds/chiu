@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.reactivestreams.Subscriber;
 import reactor.test.StepVerifier;
 
+@SuppressWarnings({"unchecked", "ResultOfMethodCallIgnored"})
 class IngestRepositoryMongoTest {
 
     private final ConnectionString connectionString = Mockito.mock(ConnectionString.class);
