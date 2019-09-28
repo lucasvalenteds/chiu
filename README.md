@@ -28,7 +28,6 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 | Run producer for test | `./gradlew runConsumer` |
 | Run consumer for test | `./gradlew runProducer` |
 | Run stress tests | `./gradlew gatlingRun` |
-| Provision the database | `docker-compose up --detach` |
 
 [jdk]: https://img.shields.io/badge/jdk-1.8-5481A0.svg?style=for-the-badge "JDK 1.8"
 [docker]: https://img.shields.io/badge/docker-19.03-007BFF.svg?style=for-the-badge "Docker 19.03"
@@ -59,3 +58,9 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 | 1 | Arduino board | Arduino Uno |
 | 1 | Ethernet Shield | HansRun w5100 |
 | 1 | Sound meter sensor | KY-038 |
+
+### Infrastructure
+
+| Description | Command |
+| :--- | :--- |
+| Provision the database | `docker-compose --file mongo.yml up --detach` |
