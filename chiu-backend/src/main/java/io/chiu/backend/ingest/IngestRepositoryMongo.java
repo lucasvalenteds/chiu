@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.Success;
 import io.chiu.backend.SensorData;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
@@ -29,7 +30,7 @@ public class IngestRepositoryMongo implements IngestRepository {
             .append("level", data.getLevel());
 
         Publisher<Success> result = client.getDatabase(connectionString.getDatabase())
-            .getCollection(connectionString.getCollection())
+            .getCollection(Optional.ofNullable(connectionString.getCollection()).orElse("events"))
             .insertOne(document);
 
         return Mono.from(result)
