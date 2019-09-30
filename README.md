@@ -64,3 +64,17 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 | Description | Command |
 | :--- | :--- |
 | Provision the database | `docker-compose --file mongo.yml up --detach` |
+
+## How to deploy
+
+![heroku] ![terraform]
+
+The project contains Terraform scripts to deploy modules on Heroku. The commands below need some environment variables to be set before running them.
+
+| Description | Command |
+| :--- | :--- |
+| Deploy backend | `./deploy-backend` |
+| Deploy frontend | `./deploy-backend` |
+
+[heroku]: https://img.shields.io/badge/provider-heroku-9E7CC1.svg?style=for-the-badge "Heroku"
+[terraform]: https://img.shields.io/badge/terraform-0.12-5C4EE5.svg?style=for-the-badge "Terraform 0.12"
