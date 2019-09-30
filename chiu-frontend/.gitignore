@@ -106,3 +106,6 @@ node_modules
 
 # End of https://www.gitignore.io/api/vue,code,vuejs,intellij+all
 dist/
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
