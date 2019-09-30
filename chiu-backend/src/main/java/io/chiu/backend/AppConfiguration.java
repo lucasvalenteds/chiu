@@ -81,6 +81,7 @@ class AppConfiguration {
     CorsConfig corsConfig() {
         String domain = environment.getProperty("frontend.url", String.class, "http://localhost:8081");
         return CorsConfigBuilder.forOrigin(domain)
+            .allowNullOrigin()
             .allowedRequestMethods(HttpMethod.GET)
             .build();
     }
