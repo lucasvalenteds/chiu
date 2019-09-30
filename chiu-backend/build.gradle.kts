@@ -32,7 +32,7 @@ dependencies {
     testImplementation("org.junit.jupiter", "junit-jupiter", properties["version.junit"].toString())
     testImplementation("org.mockito", "mockito-core", properties["version.mockito"].toString())
 
-    gatling("org.scala-lang", "scala-library", properties["version.scala"].toString())
+    implementation("org.scala-lang", "scala-library", properties["version.scala"].toString())
     gatling("io.netty", "netty-tcnative-boringssl-static", properties["version.netty.ssl"].toString())
     gatling("io.gatling", "gatling-app", properties["version.gatling"].toString())
     gatling("io.gatling", "gatling-core", properties["version.gatling"].toString())
