@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+HEROKU_EMAIL=""
+HEROKU_API_KEY=""
+HEROKU_APP_NAME="chiu-backend"
+CHIU_FRONTEND_URL="https://chiu-frontend.herokuapp.com"
+
+terraform apply \
+    -var heroku_email="$HEROKU_EMAIL" \
+    -var heroku_api_key="$HEROKU_API_KEY" \
+    -var heroku_app_name="$HEROKU_APP_NAME" \
+    -var chiu_frontend_url="$CHIU_FRONTEND_URL"
