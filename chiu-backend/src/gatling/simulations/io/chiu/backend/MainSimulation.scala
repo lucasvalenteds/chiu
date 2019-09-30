@@ -30,16 +30,28 @@ class MainSimulation extends Simulation {
     }
   }
 
-  val scene: ScenarioBuilder = scenario("WebSocket")
+  val ingest: ScenarioBuilder = scenario("WebSocket")
     .feed(levelFeeder)
     .exec(ws("Connect").connect("/"))
     .pause(1 second)
     .exec(ws("Send sensor data").sendText("${level}"))
     .pause(1 millis)
 
-  setUp(scene.inject(constantUsersPerSec(5) during (1 minutes)))
+  val export: ScenarioBuilder = scenario("SSE")
+    .exec(
+      sse("Export").connect("/export")
+        .await(1 second)(
+          sse.checkMessage("event")
+            .check(regex(""""event":"noise(.*)""""))
+        )
+    )
+
+  setUp(
+    ingest.inject(constantUsersPerSec(1) during (1 minutes)),
+    export.inject(atOnceUsers(1))
+  )
     .assertions(
-      global.responseTime.mean.lte(125),
+      global.responseTime.mean.lte(200),
       global.successfulRequests.percent.gt(95)
     )
     .protocols(protocol)
