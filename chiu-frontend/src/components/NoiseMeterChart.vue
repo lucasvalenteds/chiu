@@ -62,10 +62,10 @@ export default class NoiseMeterChart extends Vue {
 
   public created(): void {
     this.noiseSource = new EventSource(this.$props.apiUrl);
-    this.noiseSource.onerror = (event: MessageEvent) => {
+    this.noiseSource.addEventListener("error", (event: Event) => {
       this.chartData.rows[0].value = 0;
       this.showError = true;
-    };
+    });
   }
 
   public mounted(): void {
