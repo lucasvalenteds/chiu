@@ -5,6 +5,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
 import io.chiu.backend.export.ExportHandler;
+import io.chiu.backend.health.HealthHandler;
 import io.chiu.backend.ingest.IngestHandler;
 import io.chiu.backend.ingest.IngestRepository;
 import io.chiu.backend.ingest.IngestRepositoryMongo;
@@ -69,11 +70,17 @@ class AppConfiguration {
     }
 
     @Bean
-    Consumer<HttpServerRoutes> router(IngestHandler ingestHandler, ExportHandler exportHandler) {
+    HealthHandler healthHandler() {
+        return new HealthHandler();
+    }
+
+    @Bean
+    Consumer<HttpServerRoutes> router(IngestHandler ingestHandler, ExportHandler exportHandler, HealthHandler healthHandler) {
         return router -> {
             router
                 .ws("/", ingestHandler)
-                .get("/export", exportHandler);
+                .get("/export", exportHandler)
+                .get("/health", healthHandler);
         };
     }
 
