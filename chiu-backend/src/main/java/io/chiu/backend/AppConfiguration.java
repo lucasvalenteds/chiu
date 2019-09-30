@@ -86,8 +86,10 @@ class AppConfiguration {
 
     @Bean
     CorsConfig corsConfig() {
-        String domain = environment.getProperty("frontend.url", String.class, "http://localhost:8081");
-        return CorsConfigBuilder.forAnyOrigin()
+        String frontend = environment.getProperty("frontend.url", String.class, "http://localhost:8081");
+        return CorsConfigBuilder.forOrigin(frontend)
+            .allowedRequestHeaders("*")
+            .allowedRequestMethods(HttpMethod.GET)
             .build();
     }
 
