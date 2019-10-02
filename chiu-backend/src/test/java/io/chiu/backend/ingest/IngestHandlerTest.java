@@ -58,4 +58,16 @@ class IngestHandlerTest {
             .thenCancel()
             .verify();
     }
+
+    @Test
+    void testItClosesTheConnectionWhenInputIsNotValid() {
+        Flux<Void> response = client.handle((in, out) ->
+            out.sendString(Flux.just("not an integer"))
+        );
+
+        StepVerifier.create(response)
+            .expectNextCount(0)
+            .expectComplete()
+            .verify();
+    }
 }

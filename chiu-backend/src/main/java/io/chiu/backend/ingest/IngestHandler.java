@@ -30,6 +30,7 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
             .asString()
             .doOnNext(log::info)
             .map(Integer::parseInt)
+            .doOnError(log::error)
             .map(it -> new SensorData(UUID.randomUUID(), it))
             .flatMap(repository::save)
             .doOnNext(eventBus::onNext)
