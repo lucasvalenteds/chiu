@@ -1,5 +1,6 @@
 package io.chiu.backend
 
+import com.typesafe.config.{Config, ConfigFactory}
 import io.gatling.core.Predef._
 import io.gatling.core.feeder.{Feeder, Record}
 import io.gatling.core.structure.ScenarioBuilder
@@ -10,11 +11,12 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.util.Random
 
-class MainSimulation extends Simulation {
+class MainSimulation extends Simulation { 
+  val environment: Config = ConfigFactory.load()
 
   val protocol: HttpProtocolBuilder = http
-    .wsBaseUrl("ws://localhost:8080")
-    .baseUrl("http://localhost:8080")
+    .wsBaseUrl(environment.getString("chiu.ingest.url"))
+    .baseUrl(environment.getString("chiu.export.url"))
     .acceptHeader("text/event-stream")
 
   val levelFeeder: Iterator[Record[String]] = new Feeder[String] {
@@ -33,26 +35,29 @@ class MainSimulation extends Simulation {
   val ingest: ScenarioBuilder = scenario("WebSocket")
     .feed(levelFeeder)
     .exec(ws("Connect").connect("/"))
-    .pause(1 second)
     .exec(ws("Send sensor data").sendText("${level}"))
-    .pause(1 millis)
+    .pause(environment.getInt("test.delayBetweenRequestsMilliseconds") millis)
 
   val export: ScenarioBuilder = scenario("SSE")
     .exec(
       sse("Export").connect("/export")
-        .await(1 second)(
-          sse.checkMessage("event")
+        .await(environment.getInt("test.delayBetweenResponseCheckSeconds") seconds)(
+          sse.checkMessage("Event name is `noise`")
             .check(regex(""""event":"noise(.*)""""))
         )
     )
 
   setUp(
-    ingest.inject(constantUsersPerSec(1) during (1 minutes)),
-    export.inject(atOnceUsers(1))
+    ingest.inject(constantConcurrentUsers(
+      environment.getInt("test.amountOfDashboardsAtSameTime")) during (environment.getInt("test.executionTimeSeconds") seconds)
+    ),
+    export.inject(
+      atOnceUsers(environment.getInt("test.amountOfSensorsAtSameTime"))
+    )
   )
     .assertions(
-      global.responseTime.mean.lte(200),
-      global.successfulRequests.percent.gt(95)
+      global.responseTime.mean.lte(environment.getInt("test.responseTimeMilliseconds")),
+      global.successfulRequests.percent.gt(environment.getInt("test.responseSuccessRatePercentage"))
     )
     .protocols(protocol)
 }
