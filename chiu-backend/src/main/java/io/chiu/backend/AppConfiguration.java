@@ -9,6 +9,10 @@ import io.chiu.backend.health.HealthHandler;
 import io.chiu.backend.ingest.IngestHandler;
 import io.chiu.backend.ingest.IngestRepository;
 import io.chiu.backend.ingest.IngestRepositoryMongo;
+import io.chiu.backend.ingest.IngestRepositoryRedis;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
+import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.cors.CorsConfig;
 import io.netty.handler.codec.http.cors.CorsConfigBuilder;
@@ -41,6 +45,23 @@ class AppConfiguration {
     }
 
     @Bean
+    RedisURI redisURI() {
+        return RedisURI.create(
+            environment.getProperty("redis.url", String.class, "redis://localhost:6379/")
+        );
+    }
+
+    @Bean
+    RedisClient redisClient(RedisURI redisURI) {
+        return RedisClient.create(redisURI);
+    }
+
+    @Bean
+    RedisStringReactiveCommands<String, String> commands(RedisClient client) {
+        return client.connect().reactive();
+    }
+
+    @Bean
     ConnectionString connectionString() {
         return new ConnectionString(environment.getProperty(
             "database.url",
@@ -57,6 +78,10 @@ class AppConfiguration {
     @Bean
     IngestRepository ingestRepository(MongoClient client, ConnectionString connectionString) {
         return new IngestRepositoryMongo(client, connectionString);
+    }
+
+    IngestRepository ingestRepository(RedisStringReactiveCommands<String, String> commands) {
+        return new IngestRepositoryRedis(commands);
     }
 
     @Bean

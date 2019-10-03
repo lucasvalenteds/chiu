@@ -20,6 +20,7 @@ dependencies {
     implementation("org.springframework", "spring-context", properties["version.spring"].toString())
     testImplementation("org.springframework", "spring-test", properties["version.spring"].toString())
     implementation("org.mongodb", "mongodb-driver-reactivestreams", properties["version.mongodb"].toString())
+    implementation("io.lettuce", "lettuce-core", properties["version.redis"].toString())
 
     implementation("com.fasterxml.jackson.core", "jackson-databind", properties["version.jackson"].toString())
     implementation("com.github.fge", "throwing-lambdas", properties["version.throwing"].toString())
