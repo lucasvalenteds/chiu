@@ -61,7 +61,6 @@ class AppConfiguration {
         return client.connect().reactive();
     }
 
-    @Bean
     ConnectionString connectionString() {
         return new ConnectionString(environment.getProperty(
             "database.url",
@@ -70,16 +69,15 @@ class AppConfiguration {
         ));
     }
 
-    @Bean
     MongoClient mongoClient(ConnectionString connectionString) {
         return MongoClients.create(connectionString);
     }
 
-    @Bean
     IngestRepository ingestRepository(MongoClient client, ConnectionString connectionString) {
         return new IngestRepositoryMongo(client, connectionString);
     }
 
+    @Bean
     IngestRepository ingestRepository(RedisStringReactiveCommands<String, String> commands) {
         return new IngestRepositoryRedis(commands);
     }
