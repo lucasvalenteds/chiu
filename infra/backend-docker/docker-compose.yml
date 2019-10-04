@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+    backend:
+        image: io.chiu/backend:latest
+        build:
+            context: ../../chiu-backend
+            dockerfile: ../infra/backend-docker/Dockerfile
+        network_mode: host
