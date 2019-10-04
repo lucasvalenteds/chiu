@@ -2,6 +2,7 @@ version: "3.5"
 services:
   redis:
     image: redis:5
+    container_name: chiu-redis
     ports:
         - 6379:6379
     command: ["redis-server", "--appendonly", "yes"]
