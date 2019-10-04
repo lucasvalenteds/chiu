@@ -30,7 +30,7 @@ resource "heroku_build" "chiu_backend" {
 
 resource "heroku_addon" "chiu_database" {
   app  = "${heroku_app.chiu_backend.name}"
-  plan = "mongolab:sandbox"
+  plan = "heroku-redis:hobby-dev"
 }
 
 output "service_url" {
