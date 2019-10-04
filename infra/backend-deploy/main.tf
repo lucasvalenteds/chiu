@@ -24,7 +24,7 @@ resource "heroku_build" "chiu_backend" {
   buildpacks = ["https://github.com/heroku/heroku-buildpack-gradle.git"]
 
   source = {
-    path = "./"
+    path = "../../chiu-backend"
   }
 }
 

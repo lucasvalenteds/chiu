@@ -20,7 +20,7 @@ resource "heroku_build" "chiu_frontend" {
   ]
 
   source = {
-    path = "./"
+    path = "../../chiu-frontend"
   }
 }
 

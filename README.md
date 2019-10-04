@@ -77,6 +77,7 @@ The project contains Terraform scripts to deploy modules on Heroku. The commands
 
 | Description | Command |
 | :--- | :--- |
+| Enable Terraform | `terraform init` |
 | Deploy backend | `./deploy-backend` |
 | Deploy frontend | `./deploy-backend` |
 
