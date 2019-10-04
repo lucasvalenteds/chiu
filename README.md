@@ -6,7 +6,7 @@ This is an IoT experiment made to help to prevent hearing disability due to nois
 
 It uses an [Arduino](https://arduino.cc) to capture the noise level in decibels (dB) and send it in real-time to a webserver via [Web Sockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API). The data sent to the server can be monitored in a website in real-time or using the API based on [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events).
 
-The back-end is written in Java and based on Reactor Netty, the data is persisted on MongoDB and the front-end is written in TypeScript and is based on Vue.
+The back-end is written in Java and based on Reactor Netty, the data is persisted on Redis and the front-end is written in TypeScript and is based on Vue.
 
 ## Preview
 
