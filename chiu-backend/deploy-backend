@@ -3,7 +3,7 @@
 HEROKU_EMAIL=""
 HEROKU_API_KEY=""
 HEROKU_APP_NAME="chiu-backend"
-CHIU_FRONTEND_URL="https://chiu-frontend.herokuapp.com/export"
+CHIU_FRONTEND_URL="https://chiu-frontend.herokuapp.com"
 
 terraform apply \
     -auto-approve \
