@@ -99,12 +99,11 @@ class AppConfiguration {
 
     @Bean
     Consumer<HttpServerRoutes> router(IngestHandler ingestHandler, ExportHandler exportHandler, HealthHandler healthHandler) {
-        return router -> {
+        return router ->
             router
                 .ws("/", ingestHandler)
                 .get("/export", exportHandler)
                 .get("/health", healthHandler);
-        };
     }
 
     @Bean
