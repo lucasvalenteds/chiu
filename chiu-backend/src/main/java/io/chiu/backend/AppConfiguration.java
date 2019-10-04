@@ -47,7 +47,7 @@ class AppConfiguration {
     @Bean
     RedisURI redisURI() {
         return RedisURI.create(
-            environment.getProperty("redis.url", String.class, "redis://localhost:6379/")
+            environment.getProperty("database.url", String.class, "redis://localhost:6379/")
         );
     }
 
