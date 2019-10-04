@@ -63,7 +63,11 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 
 | Description | Command |
 | :--- | :--- |
-| Provision the database | `docker-compose --file mongo.yml up --detach` |
+| Provision the database | `docker-compose --file redis.yml up --detach` |
+| Generate Heroku OAuth token | `heroku authorizations:create` |
+| Revoke Heroku OAuth token | `heroku authorizations:revoke <token>` |
+| Connect to Heroku Redis | `docker exec -it chiu-redis redis-cli -u <url>` |
+| Count data persisted on Redis | `INFO keyspace` |
 
 ## How to deploy
 
