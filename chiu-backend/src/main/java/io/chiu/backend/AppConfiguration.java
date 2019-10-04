@@ -120,9 +120,9 @@ class AppConfiguration {
         return HttpServer.create()
             .port(environment.getProperty("server.port", Integer.class, 8080))
             .tcpConfiguration(it ->
-                it.doOnConnection(connection -> {
-                    connection.addHandlerLast(new CorsHandler(corsConfig));
-                })
+                it.doOnConnection(connection ->
+                    connection.addHandlerLast(new CorsHandler(corsConfig))
+                )
             )
             .route(router)
             .forwarded(true);
