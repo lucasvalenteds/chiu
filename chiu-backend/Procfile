@@ -1,1 +1,1 @@
-web: java -jar build/libs/chiu-backend-all.jar
+web: java -jar chiu-server/build/libs/chiu-server-all.jar
