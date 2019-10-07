@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactivestreams.Publisher;
-import reactor.core.publisher.EmitterProcessor;
+import reactor.core.publisher.DirectProcessor;
 import reactor.core.publisher.FluxProcessor;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -23,9 +23,9 @@ public class ExportHandler implements BiFunction<HttpServerRequest, HttpServerRe
     private static final Logger log = LogManager.getLogger(ExportHandler.class);
 
     private final ObjectMapper objectMapper;
-    private final EmitterProcessor<SensorData> eventBus;
+    private final DirectProcessor<SensorData> eventBus;
 
-    public ExportHandler(ObjectMapper objectMapper, EmitterProcessor<SensorData> eventBus) {
+    public ExportHandler(ObjectMapper objectMapper, DirectProcessor<SensorData> eventBus) {
         this.objectMapper = objectMapper;
         this.eventBus = eventBus;
     }

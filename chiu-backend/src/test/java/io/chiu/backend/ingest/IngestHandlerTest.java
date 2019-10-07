@@ -4,7 +4,7 @@ import io.chiu.backend.SensorData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import reactor.core.publisher.EmitterProcessor;
+import reactor.core.publisher.DirectProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.DisposableServer;
@@ -18,7 +18,7 @@ class IngestHandlerTest {
     private final String endpoint = "/ingest";
 
     private IngestRepository repository = Mono::just;
-    private EmitterProcessor<SensorData> eventBus = EmitterProcessor.create();
+    private DirectProcessor<SensorData> eventBus = DirectProcessor.create();
     private HttpServer server = HttpServer.create()
         .port(serverPort)
         .route(router -> router.ws(endpoint, new IngestHandler(repository, eventBus)));

@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import reactor.core.publisher.EmitterProcessor;
+import reactor.core.publisher.DirectProcessor;
 import reactor.netty.http.server.HttpServer;
 import reactor.netty.http.server.HttpServerRoutes;
 
@@ -40,8 +40,8 @@ class AppConfiguration {
     }
 
     @Bean
-    EmitterProcessor<SensorData> eventBus() {
-        return EmitterProcessor.create();
+    DirectProcessor<SensorData> eventBus() {
+        return DirectProcessor.create();
     }
 
     @Bean
@@ -83,12 +83,12 @@ class AppConfiguration {
     }
 
     @Bean
-    IngestHandler ingestHandler(IngestRepository repository, EmitterProcessor<SensorData> eventBus) {
+    IngestHandler ingestHandler(IngestRepository repository, DirectProcessor<SensorData> eventBus) {
         return new IngestHandler(repository, eventBus);
     }
 
     @Bean
-    ExportHandler exportHandler(ObjectMapper objectMapper, EmitterProcessor<SensorData> eventBus) {
+    ExportHandler exportHandler(ObjectMapper objectMapper, DirectProcessor<SensorData> eventBus) {
         return new ExportHandler(objectMapper, eventBus);
     }
 

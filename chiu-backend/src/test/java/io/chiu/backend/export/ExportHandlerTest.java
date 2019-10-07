@@ -9,7 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import reactor.core.publisher.EmitterProcessor;
+import reactor.core.publisher.DirectProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.DisposableServer;
@@ -22,7 +22,7 @@ class ExportHandlerTest {
     private final int serverPort = 8080;
     private final String endpoint = "/export";
 
-    private EmitterProcessor<SensorData> eventBus = EmitterProcessor.create();
+    private DirectProcessor<SensorData> eventBus = DirectProcessor.create();
     private final HttpServer server = HttpServer.create()
         .port(serverPort)
         .route(router -> router.get(endpoint, new ExportHandler(new ObjectMapper(), eventBus)));
