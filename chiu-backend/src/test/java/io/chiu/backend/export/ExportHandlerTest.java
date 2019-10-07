@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -39,10 +39,10 @@ class ExportHandlerTest {
         disposableServer.disposeNow();
     }
 
-    @Test
+    @RepeatedTest(10)
     void testItReturnsSensorDataAsJson() {
         Mono.just("")
-            .delaySubscription(Duration.ofSeconds(1))
+            .delaySubscription(Duration.ofMillis(250))
             .subscribe(it -> {
                 eventBus.onNext(new SensorData(UUID.fromString("41fe50fc-8186-4683-8c46-a0fe313d0cbc"), 65));
                 eventBus.onNext(new SensorData(UUID.fromString("41fe50fc-8186-4683-8c46-a0fe313d0cbc"), 55));
