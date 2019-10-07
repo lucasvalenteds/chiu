@@ -18,7 +18,7 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 
 ### Back-end
 
-![jdk] ![docker] ![compose]
+![jdk]
 
 | Description | Command |
 | :--- | :--- |
@@ -30,8 +30,6 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 | Run stress tests | `./gradlew gatlingRun` |
 
 [jdk]: https://img.shields.io/badge/jdk-1.8-5481A0.svg?style=for-the-badge "JDK 1.8"
-[docker]: https://img.shields.io/badge/docker-19.03-007BFF.svg?style=for-the-badge "Docker 19.03"
-[compose]: https://img.shields.io/badge/docker--compose-1.2-039BC6.svg?style=for-the-badge "Docker Compose 1.2"
 
 ### Front-end
 
@@ -61,13 +59,16 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 
 ### Infrastructure
 
+![docker] ![compose]
+
 | Description | Command |
 | :--- | :--- |
 | Provision the database | `docker-compose --file redis.yml up --detach` |
-| Generate Heroku OAuth token | `heroku authorizations:create` |
-| Revoke Heroku OAuth token | `heroku authorizations:revoke <token>` |
-| Connect to Heroku Redis | `docker exec -it chiu-redis redis-cli -u <url>` |
+| Connect to the database | `docker exec -it chiu-redis redis-cli -u <url>` |
 | Count data persisted on Redis | `INFO keyspace` |
+
+[docker]: https://img.shields.io/badge/docker-19.03-007BFF.svg?style=for-the-badge "Docker 19.03"
+[compose]: https://img.shields.io/badge/docker--compose-1.2-039BC6.svg?style=for-the-badge "Docker Compose 1.2"
 
 ## How to deploy
 
@@ -80,6 +81,8 @@ The project contains Terraform scripts to deploy modules on Heroku. The commands
 | Enable Terraform | `terraform init` |
 | Deploy backend | `./deploy-backend` |
 | Deploy frontend | `./deploy-backend` |
+| Generate Heroku OAuth token | `heroku authorizations:create` |
+| Revoke Heroku OAuth token | `heroku authorizations:revoke <token>` |
 
 [heroku]: https://img.shields.io/badge/provider-heroku-9E7CC1.svg?style=for-the-badge "Heroku"
 [terraform]: https://img.shields.io/badge/terraform-0.12-5C4EE5.svg?style=for-the-badge "Terraform 0.12"
