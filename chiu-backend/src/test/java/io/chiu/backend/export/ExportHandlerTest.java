@@ -44,10 +44,10 @@ class ExportHandlerTest {
         Mono.just("")
             .delaySubscription(Duration.ofSeconds(1))
             .subscribe(it -> {
-                eventBus.onNext(new SensorData(UUID.randomUUID(), 65));
-                eventBus.onNext(new SensorData(UUID.randomUUID(), 55));
-                eventBus.onNext(new SensorData(UUID.randomUUID(), 45));
-                eventBus.onNext(new SensorData(UUID.randomUUID(), 35));
+                eventBus.onNext(new SensorData(UUID.fromString("41fe50fc-8186-4683-8c46-a0fe313d0cbc"), 65));
+                eventBus.onNext(new SensorData(UUID.fromString("41fe50fc-8186-4683-8c46-a0fe313d0cbc"), 55));
+                eventBus.onNext(new SensorData(UUID.fromString("41fe50fc-8186-4683-8c46-a0fe313d0cbc"), 45));
+                eventBus.onNext(new SensorData(UUID.fromString("41fe50fc-8186-4683-8c46-a0fe313d0cbc"), 35));
             });
 
         Flux<String> response = HttpClient.create()
