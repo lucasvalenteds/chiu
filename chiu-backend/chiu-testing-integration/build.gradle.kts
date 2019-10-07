@@ -15,6 +15,17 @@ dependencies {
     implementation("com.devskiller", "jfairy", properties["version.jfairy"].toString())
 }
 
+tasks.withType<Test> {
+    onlyIf {
+        systemProperties["integration"] == "yes"
+    }
+}
+
+tasks.register<Test>("itest") {
+    systemProperties["integration"] = "yes"
+    finalizedBy("test")
+}
+
 tasks.register<JavaExec>("runConsumer") {
     classpath = sourceSets["main"].runtimeClasspath
     main = "io.chiu.backend.ExampleConsumer"
