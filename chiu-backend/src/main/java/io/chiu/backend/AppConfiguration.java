@@ -1,14 +1,10 @@
 package io.chiu.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.ConnectionString;
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoClients;
 import io.chiu.backend.export.ExportHandler;
 import io.chiu.backend.health.HealthHandler;
 import io.chiu.backend.ingest.IngestHandler;
 import io.chiu.backend.ingest.IngestRepository;
-import io.chiu.backend.ingest.IngestRepositoryMongo;
 import io.chiu.backend.ingest.IngestRepositoryRedis;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
@@ -59,22 +55,6 @@ class AppConfiguration {
     @Bean
     RedisStringReactiveCommands<String, String> commands(RedisClient client) {
         return client.connect().reactive();
-    }
-
-    ConnectionString connectionString() {
-        return new ConnectionString(environment.getProperty(
-            "database.url",
-            String.class,
-            "mongodb://admin:password@localhost:27017/chiu.events"
-        ));
-    }
-
-    MongoClient mongoClient(ConnectionString connectionString) {
-        return MongoClients.create(connectionString);
-    }
-
-    IngestRepository ingestRepository(MongoClient client, ConnectionString connectionString) {
-        return new IngestRepositoryMongo(client, connectionString);
     }
 
     @Bean
