@@ -96,11 +96,13 @@ tasks.register<Test>("itest") {
 }
 
 tasks.register<JavaExec>("runConsumer") {
-   main = "io.chiu.backend.ExampleConsumer"
-   classpath = integrationTest.runtimeClasspath
+    main = "io.chiu.backend.ExampleConsumer"
+    classpath += integrationTest.runtimeClasspath
+    classpath += sourceSets["main"].runtimeClasspath
 }
 
 tasks.register<JavaExec>("runProducer") {
-   main = "io.chiu.backend.ExampleProducer"
-   classpath = integrationTest.runtimeClasspath
+    main = "io.chiu.backend.ExampleProducer"
+    classpath += integrationTest.runtimeClasspath
+    classpath += sourceSets["main"].runtimeClasspath
 }

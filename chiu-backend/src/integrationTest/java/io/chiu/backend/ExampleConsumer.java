@@ -3,19 +3,15 @@ package io.chiu.backend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import reactor.netty.http.client.HttpClient;
 
-@Configuration
-@PropertySource("classpath:application.properties")
 public class ExampleConsumer {
 
     private static final Logger log = LogManager.getLogger(ExampleConsumer.class);
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ExampleConsumer.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Beans.class);
         Environment environment = context.getBean(Environment.class);
 
         HttpClient.create()

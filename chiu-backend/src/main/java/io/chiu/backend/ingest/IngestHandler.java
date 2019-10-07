@@ -1,5 +1,7 @@
 package io.chiu.backend.ingest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.lambdas.Throwing;
 import io.chiu.backend.SensorData;
 import java.util.UUID;
 import java.util.function.BiFunction;
@@ -16,10 +18,12 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
 
     private static final Logger log = LogManager.getLogger(IngestHandler.class);
     private final IngestRepository repository;
+    private final ObjectMapper objectMapper;
     private final DirectProcessor<SensorData> eventBus;
 
-    public IngestHandler(IngestRepository repository, DirectProcessor<SensorData> eventBus) {
+    public IngestHandler(IngestRepository repository, ObjectMapper objectMapper, DirectProcessor<SensorData> eventBus) {
         this.repository = repository;
+        this.objectMapper = objectMapper;
         this.eventBus = eventBus;
     }
 
@@ -29,11 +33,11 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
             .retain()
             .asString()
             .doOnNext(log::info)
-            .map(Integer::parseInt)
+            .map(Throwing.function(it -> objectMapper.readValue(it, NoiseLevel.class)))
             .doOnError(log::error)
             .flatMap(it ->
                 Mono.fromCallable(UUID::randomUUID)
-                    .map(uuid -> new SensorData(uuid, it))
+                    .map(uuid -> new SensorData(uuid, it.getLevel()))
             )
             .flatMap(repository::save)
             .doOnNext(eventBus::onNext)

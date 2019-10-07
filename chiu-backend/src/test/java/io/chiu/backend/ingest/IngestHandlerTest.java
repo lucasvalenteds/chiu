@@ -1,5 +1,7 @@
 package io.chiu.backend.ingest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.lambdas.Throwing;
 import io.chiu.backend.SensorData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +20,11 @@ class IngestHandlerTest {
     private final String endpoint = "/ingest";
 
     private IngestRepository repository = Mono::just;
+    private ObjectMapper objectMapper = new ObjectMapper();
     private DirectProcessor<SensorData> eventBus = DirectProcessor.create();
     private HttpServer server = HttpServer.create()
         .port(serverPort)
-        .route(router -> router.ws(endpoint, new IngestHandler(repository, eventBus)));
+        .route(router -> router.ws(endpoint, new IngestHandler(repository, objectMapper, eventBus)));
 
     private final HttpClient.WebsocketSender client = HttpClient.create()
         .baseUrl("ws://localhost:" + serverPort)
@@ -43,8 +46,10 @@ class IngestHandlerTest {
     @RepeatedTest(10)
     void testItReturnOKForEveryConnection() {
         Flux<String> response = client.handle((in, out) -> {
-            out.sendString(Flux.just("1", "2")).then()
-                .subscribe();
+            Flux<String> levelsToSendAsJson = Flux.just(new NoiseLevel(1), new NoiseLevel(2))
+                .map(Throwing.function(objectMapper::writeValueAsString));
+
+            out.sendString(levelsToSendAsJson).then().subscribe();
 
             return in.receive().asString();
         });
@@ -59,7 +64,7 @@ class IngestHandlerTest {
     @RepeatedTest(10)
     void testItClosesTheConnectionWhenInputIsNotValid() {
         Flux<Void> response = client.handle((in, out) ->
-            out.sendString(Flux.just("not an integer"))
+            out.sendString(Flux.just("not a valid noise level instance"))
         );
 
         StepVerifier.create(response)

@@ -35,7 +35,7 @@ class MainSimulation extends Simulation {
   val ingest: ScenarioBuilder = scenario("WebSocket")
     .feed(levelFeeder)
     .exec(ws("Connect").connect("/"))
-    .exec(ws("Send sensor data").sendText("${level}"))
+    .exec(ws("Send sensor data").sendText("{\"level\":${level}}"))
     .pause(environment.getInt("test.delayBetweenRequestsMilliseconds") millis)
 
   val export: ScenarioBuilder = scenario("SSE")

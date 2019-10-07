@@ -83,8 +83,8 @@ class AppConfiguration {
     }
 
     @Bean
-    IngestHandler ingestHandler(IngestRepository repository, DirectProcessor<SensorData> eventBus) {
-        return new IngestHandler(repository, eventBus);
+    IngestHandler ingestHandler(IngestRepository repository, ObjectMapper objectMapper, DirectProcessor<SensorData> eventBus) {
+        return new IngestHandler(repository, objectMapper, eventBus);
     }
 
     @Bean
