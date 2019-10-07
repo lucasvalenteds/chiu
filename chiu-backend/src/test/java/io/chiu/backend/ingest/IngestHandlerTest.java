@@ -3,8 +3,7 @@ package io.chiu.backend.ingest;
 import io.chiu.backend.SensorData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.RepeatedTest;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,7 +17,7 @@ class IngestHandlerTest {
     private final int serverPort = 8080;
     private final String endpoint = "/ingest";
 
-    private IngestRepository repository = data -> Mono.empty();
+    private IngestRepository repository = Mono::just;
     private EmitterProcessor<SensorData> eventBus = EmitterProcessor.create();
     private HttpServer server = HttpServer.create()
         .port(serverPort)
@@ -41,25 +40,23 @@ class IngestHandlerTest {
         disposableServer.disposeNow();
     }
 
-    @Test
-    @Timeout(1)
+    @RepeatedTest(10)
     void testItReturnOKForEveryConnection() {
         Flux<String> response = client.handle((in, out) -> {
-            Flux<String> dataToSend = Flux.just("1");
-            Flux<String> dataReceived = in.receive().asString().take(1);
+            out.sendString(Flux.just("1", "2")).then()
+                .subscribe();
 
-            return Flux.mergeSequential(out.sendString(dataToSend), dataReceived)
-                .cast(String.class)
-                .last();
+            return in.receive().asString();
         });
 
         StepVerifier.create(response)
+            .expectNext("OK")
             .expectNext("OK")
             .thenCancel()
             .verify();
     }
 
-    @Test
+    @RepeatedTest(10)
     void testItClosesTheConnectionWhenInputIsNotValid() {
         Flux<Void> response = client.handle((in, out) ->
             out.sendString(Flux.just("not an integer"))

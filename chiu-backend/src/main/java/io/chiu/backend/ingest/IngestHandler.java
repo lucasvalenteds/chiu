@@ -15,7 +15,6 @@ import reactor.netty.http.websocket.WebsocketOutbound;
 public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutbound, Publisher<Void>> {
 
     private static final Logger log = LogManager.getLogger(IngestHandler.class);
-
     private final IngestRepository repository;
     private final EmitterProcessor<SensorData> eventBus;
 
@@ -26,22 +25,21 @@ public class IngestHandler implements BiFunction<WebsocketInbound, WebsocketOutb
 
     @Override
     public Publisher<Void> apply(WebsocketInbound in, WebsocketOutbound out) {
-        Flux<String> input = in.receive()
+        return in.receive()
+            .retain()
             .asString()
             .doOnNext(log::info)
             .map(Integer::parseInt)
             .doOnError(log::error)
-            .map(it -> new SensorData(UUID.randomUUID(), it))
+            .flatMap(it ->
+                Mono.fromCallable(UUID::randomUUID)
+                    .map(uuid -> new SensorData(uuid, it))
+            )
             .flatMap(repository::save)
             .doOnNext(eventBus::onNext)
-            .map(SensorData::toString);
-
-        Mono<String> output = Mono.just("OK");
-
-        Mono<String> response = Flux.mergeSequential(input, output)
-            .doOnNext(log::info)
-            .last();
-
-        return out.sendString(response);
+            .map(SensorData::toString)
+            .flatMap(it ->
+                out.sendString(Flux.just("OK"))
+            );
     }
 }
