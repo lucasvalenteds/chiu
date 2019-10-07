@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# https://github.com/lkishalmi/gradle-gatling-plugin/issues/94
+CHIU_EXPORT_URL=https://chiu-backend.herokuapp.com CHIU_INGEST_URL=ws://chiu-backend.herokuapp.com ./gradlew clean gatlingRun
