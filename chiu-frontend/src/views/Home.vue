@@ -39,6 +39,7 @@
           <v-card-actions>
             <p class="subheading pa-2">{{ $t("noise.levels.table.source.label") }}</p>
             <a
+              target="_blank"
               href="https://www.who.int/ceh/capacity/v1_ruido.pdf"
             >{{ $t("noise.levels.table.source.text") }}</a>
           </v-card-actions>
