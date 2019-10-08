@@ -19,10 +19,16 @@
                  @change="onLevelChange"
                ></v-slider>
             </v-flex>
+            <v-card-actions class="pa-0 ma-0">
+                <v-spacer></v-spacer>
+                <v-btn text flat color="primary" outline :disabled="isPlaying" @click="playArbitratyNoiseLevel">
+                    {{ $t("noise.player.enable") }}
+                </v-btn>
+                <v-btn text flat color="warning" outline :disabled="!isPlaying" @click="resetNoiseLevel">
+                    {{ $t("noise.player.disable") }}
+                </v-btn>
+            </v-card-actions>
         </v-flex>
-        <v-btn text flat color="primary" :disabled="!isPlaying" @click="resetNoiseLevel">
-            {{ $t("noise.player.disable") }}
-        </v-btn>
     </div>
 </template>
 
@@ -101,6 +107,10 @@ export default class NoisePlayer extends Vue {
         this.isPlaying = false;
         this.player.currentTime = 0.0;
         this.player.pause();
+    }
+
+    public playArbitratyNoiseLevel(): void {
+        this.onLevelChange(25);
     }
 
     public resetNoiseLevel(): void {
