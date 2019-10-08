@@ -25,5 +25,10 @@
     "noise.levels.table.data.130": "Fone de ouvido em alto nível",
     "noise.levels.table.data.150": "Arma de espoleta, fogos de artifício",
     "noise.levels.table.headers.level": "Nível (db)",
-    "noise.levels.table.headers.description": "Exemplo"
+    "noise.levels.table.headers.description": "Exemplo",
+    "noise.player.title": "Simulador de ruído",
+    "noise.player.message": "Selecione o nível de ruído desejado na barra abaixo. Clique no botão para parar a reprodução do som.",
+    "noise.player.level": "Nível",
+    "noise.player.enable": "Ligar",
+    "noise.player.disable": "Desligar"
 }

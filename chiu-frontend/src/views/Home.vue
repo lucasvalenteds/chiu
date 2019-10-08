@@ -2,14 +2,22 @@
   <v-container fluid grid-list-xl>
     <v-layout row wrap justify-center>
       <v-flex xs12 sm6 lg4>
-        <v-card>
-          <v-card-title primary-title>
-            <v-icon class="mr-3">hearing</v-icon>
-            <h3 class="headline">{{ $t("noise.meter.chart.noise.title") }}</h3>
-          </v-card-title>
-          <v-divider></v-divider>
-          <NoiseMeterChart :apiUrl="apiUrl"/>
-        </v-card>
+          <v-card>
+            <v-card-title primary-title>
+              <v-icon class="mr-3">hearing</v-icon>
+              <h3 class="headline">{{ $t("noise.meter.chart.noise.title") }}</h3>
+            </v-card-title>
+            <v-divider></v-divider>
+            <NoiseMeterChart :apiUrl="apiUrl"/>
+          </v-card>
+          <v-card class="mt-4">
+            <v-card-title primary-title>
+              <v-icon class="mr-3">radio</v-icon>
+              <h3 class="headline">{{ $t("noise.player.title") }}</h3>
+            </v-card-title>
+            <v-divider></v-divider>
+            <NoisePlayer/>
+          </v-card>
       </v-flex>
       <v-flex xs12 sm6 lg4>
         <v-card>
@@ -35,6 +43,7 @@
 <script lang="ts">
 import NoiseLevelsTable from "@/components/NoiseLevelsTable.vue";
 import NoiseMeterChart from "@/components/NoiseMeterChart.vue";
+import NoisePlayer from "@/components/NoisePlayer.vue";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -42,6 +51,7 @@ import Component from "vue-class-component";
   components: {
     NoiseLevelsTable,
     NoiseMeterChart,
+    NoisePlayer,
   },
   props: {
     apiUrl: {
