@@ -30,5 +30,7 @@
     "noise.player.message": "Selecione o nível de ruído desejado na barra abaixo. Clique no botão para parar a reprodução do som.",
     "noise.player.level": "Nível",
     "noise.player.enable": "Ligar",
-    "noise.player.disable": "Desligar"
+    "noise.player.disable": "Desligar",
+    "noise.player.source.label": "Créditos:",
+    "noise.player.source.text": "Freesound e usuários"
 }

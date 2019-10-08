@@ -17,6 +17,14 @@
             </v-card-title>
             <v-divider></v-divider>
             <NoisePlayer :tracklist="tracklist"/>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <p class="subheading pa-2">{{ $t("noise.player.source.label") }}</p>
+              <a
+                target="_blank"
+                href="https://freesound.org/"
+              >{{ $t("noise.player.source.text") }}</a>
+            </v-card-actions>
           </v-card>
       </v-flex>
       <v-flex xs12 sm6 lg4>
