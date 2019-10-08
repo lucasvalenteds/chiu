@@ -27,7 +27,7 @@
     "noise.levels.table.headers.level": "Nível (db)",
     "noise.levels.table.headers.description": "Exemplo",
     "noise.player.title": "Simulador de ruído",
-    "noise.player.message": "Selecione o nível de ruído desejado na barra abaixo. Clique no botão para parar a reprodução do som.",
+    "noise.player.message": "Selecione o nível de ruído desejado na barra abaixo utilizando o mouse. Utilize os botões abaixo para controlar a reprodução do som.",
     "noise.player.level": "Nível",
     "noise.player.enable": "Iniciar",
     "noise.player.disable": "Parar",
