@@ -10,9 +10,15 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 
 ## Preview
 
-| Noise level meter | Reference values |
-| :---: | :---: |
-| ![Website showing noise level in real-time using a chart](./docs/preview-meter.gif) | ![Table with common noise levels for comparison](./docs/preview-level.png) |
+### Mobile
+
+| Noise meter | Noise player | Reference values |
+| :---: | :---: | :---: |
+| ![Website showing noise level in real-time using a chart](./docs/noise-meter.gif) | ![Website showing how to simulate noise of based on decibel levels](./docs/noise-player.gif) | ![Table with common noise levels for comparison](./docs/noise-table.gif) |
+
+### Desktop
+
+![Website showing noise level in real-time using a chart, a noise simulator and table with reference values](./docs/desktop.gif)
 
 ## How to run
 
