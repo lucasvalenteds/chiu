@@ -40,18 +40,19 @@ export interface ColorRange {
     color: string;
 }
 
-@Component
+@Component({
+    props: {
+        tracklist: {
+            type: Array as () => SoundTrack[],
+            default: [],
+        },
+    },
+})
 export default class NoisePlayer extends Vue {
     public noiseLevel: number = 0;
     public isPlaying: boolean = false;
 
     public player: HTMLAudioElement = new Audio();
-    public tracklist: SoundTrack[] = [
-        {
-            levelFilter: (level: number) => true,
-            file: "",
-        },
-    ];
     public sliderColorRange: ColorRange[] = [
         {
             matches: (level: number) => level >= 1 && level < 50,
@@ -83,7 +84,7 @@ export default class NoisePlayer extends Vue {
     }
 
     public created(): void {
-        this.player = this.selectTrackBasedOnLevel(this.noiseLevel, this.tracklist);
+        this.player = this.selectTrackBasedOnLevel(this.noiseLevel, this.$props.tracklist);
     }
 
     public destroyed(): void {
@@ -122,7 +123,7 @@ export default class NoisePlayer extends Vue {
             this.resetNoiseLevel();
         } else {
             this.stopPlaying();
-            this.player = this.selectTrackBasedOnLevel(this.noiseLevel, this.tracklist);
+            this.player = this.selectTrackBasedOnLevel(this.noiseLevel, this.$props.tracklist);
             this.startPlaying();
         }
     }

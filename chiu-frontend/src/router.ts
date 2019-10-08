@@ -12,6 +12,12 @@ export default new Router({
       name: "home",
       props: {
         apiUrl: process.env.VUE_APP_API_URL,
+        tracklist: [
+          {
+              levelFilter: (level: number) => true,
+              file: "",
+          },
+        ],
       },
       component: () => import("@/views/Home.vue"),
     },

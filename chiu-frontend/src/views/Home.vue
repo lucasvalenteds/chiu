@@ -16,7 +16,7 @@
               <h3 class="headline">{{ $t("noise.player.title") }}</h3>
             </v-card-title>
             <v-divider></v-divider>
-            <NoisePlayer/>
+            <NoisePlayer :tracklist="tracklist"/>
           </v-card>
       </v-flex>
       <v-flex xs12 sm6 lg4>
@@ -56,6 +56,10 @@ import Component from "vue-class-component";
   props: {
     apiUrl: {
       type: String,
+      required: true,
+    },
+    tracklist: {
+      type: Array,
       required: true,
     },
   },
