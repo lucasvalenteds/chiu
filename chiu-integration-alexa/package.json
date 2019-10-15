@@ -1,0 +1,9 @@
+{
+  "name": "chiu-integration-alexa",
+  "main": "index.js",
+  "dependencies": {
+    "ask-sdk-core": "^2.7.0",
+    "ask-sdk-model": "^1.20.0",
+    "eventsource": "^1.0.7"
+  }
+}
