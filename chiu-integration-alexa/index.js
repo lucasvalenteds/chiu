@@ -6,7 +6,7 @@ const CurrentNoiseLevelHandler = {
         const type = Alexa.getRequestType(handlerInput.requestEnvelope);
         const name = Alexa.getIntentName(handlerInput.requestEnvelope);
 
-        return (name === "GetNoiseLevelIntent") && (type === "IntentRequest" || type === "LaunchRequest");
+        return (name === "GetCurrentNoiseLevel") && (type === "IntentRequest" || type === "LaunchRequest");
     },
     async handle(handlerInput) {
         const noiseLevel = await ChiuAPI.getNoiseLevel(process.env.API_URL);
