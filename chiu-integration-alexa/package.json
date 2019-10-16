@@ -1,9 +1,16 @@
 {
   "name": "chiu-integration-alexa",
   "main": "index.js",
+  "scripts": {
+    "build": "tsc --lib ES2015 index.ts"
+  },
   "dependencies": {
     "ask-sdk-core": "^2.7.0",
     "ask-sdk-model": "^1.20.0",
     "eventsource": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.1",
+    "typescript": "^3.6.4"
   }
 }
