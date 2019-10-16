@@ -63,11 +63,6 @@ export class LaunchRequestIntent implements RequestHandler {
 
         return input.responseBuilder
             .speak("Olá do projeto Chiu :)")
-            .addDelegateDirective({
-                name: process.env.AWS_INTENT_NAME,
-                slots: {},
-                confirmationStatus: "CONFIRMED",
-            })
             .getResponse();
     }
 }
