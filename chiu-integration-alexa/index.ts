@@ -1,7 +1,22 @@
 import { RequestHandler, HandlerInput, SkillBuilders, getIntentName, ErrorHandler, getRequestType } from "ask-sdk-core";
 import { LambdaHandler } from "ask-sdk-core/dist/skill/factory/BaseSkillFactory";
 import { Response } from "ask-sdk-model";
-import * as ChiuAPI from "./api";
+const EventSource = require("eventsource");
+
+export function getNoiseLevel(url: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const sse = new EventSource(url);
+
+        sse.addEventListener("noise", event => {
+            resolve(JSON.parse(event.data).level);
+            sse.close();
+        });
+
+        sse.addEventListener("error", error => {
+            reject(error);
+        });
+    });
+}
 
 export class CurrentNoiseLevelHandler implements RequestHandler {
     async canHandle(input: HandlerInput): Promise<boolean> {
@@ -20,7 +35,7 @@ export class CurrentNoiseLevelHandler implements RequestHandler {
         console.log(CurrentNoiseLevelHandler.name + "::handle: Request envelope:", input.requestEnvelope);
 
         try {
-            const noiseLevel: string = await ChiuAPI.getNoiseLevel(process.env.CHIU_API_URL);
+            const noiseLevel: string = await getNoiseLevel(process.env.CHIU_API_URL);
             console.log(CurrentNoiseLevelHandler.name + "::handle: Noise level retrieved from server:", noiseLevel);
 
             return input.responseBuilder
