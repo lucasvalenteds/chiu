@@ -1,0 +1,68 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "projeto chiu",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "CurrentNoiseLevelIntent",
+                    "slots": [],
+                    "samples": [
+                        "meça o ruido usando o chiu",
+                        "peça o ruido atual",
+                        "consulte o nivel de ruido",
+                        "consulte o nivel de ruido atual",
+                        "peça o nivel de ruido atual",
+                        "pede o nivel de ruido atual",
+                        "me diz o nivel de ruido",
+                        "me fala o nivel de ruido atual",
+                        "me fala o nivel de ruido",
+                        "me fale o nivel de ruido atual",
+                        "me fale o nivel de ruido",
+                        "me fale o ruido atual",
+                        "me fala o ruido atual",
+                        "meça o ruido",
+                        "me fala o ruido",
+                        "me diz o ruido segundo projeto chiu",
+                        "me diz o ruido",
+                        "perdunta sobre o barulho pro projeto chiu",
+                        "pergunta do barulho pro projeto chiu",
+                        "pergunta do barulho",
+                        "pergunte para o projeto chiu sobre ruido",
+                        "pergunte pro projeto chiu sobre ruido",
+                        "pergunte sobre ruido",
+                        "pergunte sobre o ruido",
+                        "nivel de ruido atual",
+                        "qual o nivel de ruido atual",
+                        "qual o nivel de ruido",
+                        "me diz o nivel de ruido atual",
+                        "como esta o ruido",
+                        "como está o ruido",
+                        "nivel de ruido",
+                        "nível de ruido",
+                        "me diz o nível de ruído",
+                        "me diz como tá o barulho",
+                        "como ta o barulho hoje",
+                        "como tá o barulho hoje",
+                        "como esta o barulho",
+                        "me fala o nível de ruido",
+                        "qual é o nivel de ruido",
+                        "o nivel de ruido"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
