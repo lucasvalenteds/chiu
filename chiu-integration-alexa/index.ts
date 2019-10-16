@@ -3,7 +3,6 @@ import { LambdaHandler } from "ask-sdk-core/dist/skill/factory/BaseSkillFactory"
 import { Response } from "ask-sdk-model";
 import * as ChiuAPI from "./api";
 
-// alexa, qual é o nivel de ruido do projeto chiu
 export class CurrentNoiseLevelHandler implements RequestHandler {
     async canHandle(input: HandlerInput): Promise<boolean> {
         const isIntent = getRequestType(input.requestEnvelope) === "IntentRequest";
