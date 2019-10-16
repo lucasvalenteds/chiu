@@ -25,12 +25,12 @@ export class CurrentNoiseLevelHandler implements RequestHandler {
             console.log(CurrentNoiseLevelHandler.name + "::handle: Noise level retrieved from server:", noiseLevel);
 
             return input.responseBuilder
-                .withSimpleCard("Projeto Chiu", "O nível de ruído atual é " + noiseLevel + ".")
+                .speak("O nível de ruído atual é " + noiseLevel + ".")
                 .getResponse();
         } catch (error) {
             console.error(CurrentNoiseLevelHandler.name + "::handle: Chiu API seems not to be available: " + error.message)
             return input.responseBuilder
-                .withSimpleCard("Projeto Chiu", "Não foi possível obter o nível de ruído atual.")
+                .speak("Não foi possível obter o nível de ruído atual.")
                 .getResponse();
         }
     }
@@ -48,7 +48,7 @@ export class LaunchRequestIntent implements RequestHandler {
         console.log(LaunchRequestIntent.name + "::handle: Request envelope:", input.requestEnvelope);
 
         return input.responseBuilder
-            .withSimpleCard("Projeto Chiu", "Olá do projeto Chiu :)")
+            .speak("Olá do projeto Chiu :)")
             .addDelegateDirective({
                 name: process.env.AWS_INTENT_NAME,
                 slots: {},
@@ -86,8 +86,7 @@ export class GenericErrorHandler implements ErrorHandler {
         console.log(GenericErrorHandler.name + "::handle::error:", error.message);
 
         return input.responseBuilder
-            .withSimpleCard("Projeto Chiu", "Não entendi. Fale novamente, por favor.")
-            .reprompt("Não entendi. Fale novamente, por favor.")
+            .speak("Não entendi. Fale novamente, por favor.")
             .getResponse();
     }
 }
