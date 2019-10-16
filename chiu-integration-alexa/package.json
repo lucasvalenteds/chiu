@@ -2,7 +2,7 @@
   "name": "chiu-integration-alexa",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --lib ES2015 index.ts"
+    "compile": "tsc --lib ES2015 index.ts"
   },
   "dependencies": {
     "ask-sdk-core": "^2.7.0",

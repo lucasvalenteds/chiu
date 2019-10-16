@@ -1,10 +1,12 @@
-filename = chiu-integration-alexa.zip
+package = chiu-integration-alexa.zip
+code = index.js
 
-default: zip
+default: build
 
-zip:
-	@npm run build
-	@zip -r $(filename) ./
+build:
+	@npm run compile
+	@zip -r $(package) ./
 
 clean:
-	@rm $(filename)
+	@rm $(package)
+	@rm $(code)
