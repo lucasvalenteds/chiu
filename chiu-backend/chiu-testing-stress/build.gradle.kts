@@ -3,7 +3,7 @@ import com.github.lkishalmi.gradle.gatling.GatlingPluginExtension
 plugins {
     java
     scala
-    id("com.github.lkishalmi.gatling") version "3.2.9"
+    id("com.github.lkishalmi.gatling") version "3.3.4"
 }
 
 dependencies {
