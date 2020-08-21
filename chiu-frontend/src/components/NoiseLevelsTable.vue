@@ -1,5 +1,10 @@
 <template>
-  <v-data-table :headers="noiseLevelHeaders" :items="noiseLevelScore" hide-default-footer>
+  <v-data-table 
+      :headers="noiseLevelHeaders"
+      :items="noiseLevelScore"
+      disable-pagination
+      hide-default-footer
+    >
     <template slot="items" slot-scope="props">
       <td class="noise-level-score text-xs-center">{{ props.item.level }}</td>
       <td class="noise-level-header">{{ props.item.description }}</td>
