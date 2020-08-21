@@ -15,9 +15,13 @@
               {{ $t("noise.player.title") }}
             </v-card-title>
             <NoisePlayer :tracklist="tracklist"/>
+            <v-divider/>
             <v-card-actions>
-            <v-spacer></v-spacer>
-              <v-btn text href="https://freesound.org/">
+              <v-card-text class="caption">
+                {{ $t("noise.player.source.text") }}
+              </v-card-text>
+              <v-spacer></v-spacer>
+              <v-btn text target="_blank" href="https://freesound.org/">
                 {{ $t("noise.player.source.label") }}
               </v-btn>
             </v-card-actions>
@@ -30,9 +34,13 @@
             {{ $t("noise.levels.table.title") }}
           </v-card-title>
           <NoiseLevelsTable/>
+          <v-divider/>
           <v-card-actions>
+            <v-card-text class="caption">
+              {{ $t("noise.levels.table.source.text") }}
+            </v-card-text>
             <v-spacer></v-spacer>
-            <v-btn text href="https://www.who.int/ceh/capacity/v1_ruido.pdf">
+            <v-btn text target="_blank" href="https://www.who.int/ceh/capacity/v1_ruido.pdf">
               {{ $t("noise.levels.table.source.label") }}
             </v-btn>
           </v-card-actions>

@@ -1,7 +1,7 @@
 {
     "app.name": "Projeto Chiu",
     "app.toolbar.about": "Sobre",
-    "app.about.modal.title": "Sobre o projeto",
+    "app.about.modal.title": "Sobre",
     "app.about.modal.message": "O Projeto Chiu provê dados sobre o nível de ruído em um determinado local. Este experimento de IoT foi feito para ajudar na prevenção da perda auditiva por conta de poluição sonora. Os dados coletados podem ser analisados futuramente visando entender o aumento de poluição sonora ao longo do tempo.",
     "app.about.modal.button.close": "Fechar",
     "app.about.modal.button.source": "Código-fonte",
@@ -9,7 +9,8 @@
     "noise.meter.chart.noise.label": "Decibéis",
     "noise.meter.chart.noise.error": "Serviço indisponível",
     "noise.levels.table.title": "Valores de referência",
-    "noise.levels.table.source.label": "Fonte",
+    "noise.levels.table.source.label": "Saber mais",
+    "noise.levels.table.source.text": "Fonte: Organização Mundial da Saúde",
     "noise.levels.table.data.0": "Limiar auditivo",
     "noise.levels.table.data.10": "Respiração",
     "noise.levels.table.data.50": "Ambiente quieto",
@@ -29,5 +30,6 @@
     "noise.player.level": "Nível",
     "noise.player.enable": "Iniciar",
     "noise.player.disable": "Parar",
-    "noise.player.source.label": "Fonte"
+    "noise.player.source.label": "Fonte",
+    "noise.player.source.text": "Fonte: Freesound e usuários"
 }
