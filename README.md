@@ -10,15 +10,13 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 
 ## Preview
 
-### Mobile
-
 | Noise meter | Noise player | Reference values |
 | :---: | :---: | :---: |
-| ![Website showing noise level in real-time using a chart](./docs/noise-meter.gif) | ![Website showing how to simulate noise of based on decibel levels](./docs/noise-player.gif) | ![Table with common noise levels for comparison](./docs/noise-table.gif) |
+| ![Website showing noise level in real-time using a chart](./preview/meter.gif) | ![Website showing how to simulate noise of based on decibel levels](./preview/player.gif) | ![Table with common noise levels for comparison](./preview/table.gif) |
 
-### Desktop
+---
 
-![Website showing noise level in real-time using a chart, a noise simulator and table with reference values](./docs/desktop.gif)
+![Website showing noise level in real-time using a chart, a noise simulator and table with reference values](./preview/desktop.gif)
 
 ## How to run
 
@@ -35,7 +33,7 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 | Run consumer for test | `./gradlew runProducer` |
 | Run stress tests | `./gradlew gatlingRun` |
 
-[jdk]: https://img.shields.io/badge/jdk-1.8-5481A0.svg?style=for-the-badge "JDK 1.8"
+[jdk]: https://img.shields.io/badge/jdk-14-5481A0.svg?style=for-the-badge "JDK 14"
 
 ### Front-end
 
@@ -48,7 +46,7 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 | Run app for development | `npm run serve` |
 | Build app for production | `npm run build` |
 
-[node]: https://img.shields.io/badge/node-12-73B657.svg?style=for-the-badge "Node 12"
+[node]: https://img.shields.io/badge/node-12-73B657.svg?style=for-the-badge "Node 14"
 [npm]: https://img.shields.io/badge/npm-6-C93B39.svg?style=for-the-badge "NPM 6"
 
 ### Hardware
@@ -74,7 +72,7 @@ The back-end is written in Java and based on Reactor Netty, the data is persiste
 | Count data persisted on Redis | `INFO keyspace` |
 
 [docker]: https://img.shields.io/badge/docker-19.03-007BFF.svg?style=for-the-badge "Docker 19.03"
-[compose]: https://img.shields.io/badge/docker--compose-1.2-039BC6.svg?style=for-the-badge "Docker Compose 1.2"
+[compose]: https://img.shields.io/badge/docker--compose-1.25-039BC6.svg?style=for-the-badge "Docker Compose 1.25"
 
 ## How to deploy
 
