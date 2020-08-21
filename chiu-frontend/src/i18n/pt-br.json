@@ -1,7 +1,6 @@
 {
     "app.name": "Projeto Chiu",
     "app.toolbar.about": "Sobre",
-    "app.toolbar.map": "Mapa",
     "app.about.modal.title": "Sobre o projeto",
     "app.about.modal.message": "O Projeto Chiu provê dados sobre o nível de ruído em um determinado local. Este experimento de IoT foi feito para ajudar na prevenção da perda auditiva por conta de poluição sonora. Os dados coletados podem ser analisados futuramente visando entender o aumento de poluição sonora ao longo do tempo.",
     "app.about.modal.button.close": "Fechar",
