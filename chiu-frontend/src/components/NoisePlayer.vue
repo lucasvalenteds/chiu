@@ -22,10 +22,10 @@
             </v-flex>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" depressed :disabled="isPlaying" @click="playArbitratyNoiseLevel">
+                <v-btn color="grey darken-3" class="white--text" depressed :disabled="isPlaying" @click="playArbitratyNoiseLevel">
                     {{ $t("noise.player.enable") }}
                 </v-btn>
-                <v-btn color="primary" depressed :disabled="!isPlaying" @click="resetNoiseLevel">
+                <v-btn color="grey darken-3" class="white--text" depressed :disabled="!isPlaying" @click="resetNoiseLevel">
                     {{ $t("noise.player.disable") }}
                 </v-btn>
             </v-card-actions>

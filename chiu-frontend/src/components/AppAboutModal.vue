@@ -5,10 +5,9 @@
       <v-card-text id="about-modal-content">{{ $t("app.about.modal.message") }}</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn id="about-modal-source" href="#" text>{{ $t("app.about.modal.button.source") }}</v-btn>
         <v-btn
           id="about-modal-cancel"
-          color="primary"
+          color="grey darken-4"
           text
           @click="$emit('onCancel')"
         >{{ $t("app.about.modal.button.close") }}</v-btn>
