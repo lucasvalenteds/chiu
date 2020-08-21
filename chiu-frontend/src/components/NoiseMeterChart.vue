@@ -3,7 +3,8 @@
     <v-alert
       id="noise-meter-error"
       :value="showError"
-      type="info"
+      type="error"
+      color="grey darken-3"
     >{{ $t("noise.meter.chart.noise.error") }}</v-alert>
     <ve-gauge 
         id="noise-meter-chart"
