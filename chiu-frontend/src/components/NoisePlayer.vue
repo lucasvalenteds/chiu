@@ -4,7 +4,7 @@
             <v-card-subtitle class="ma-0 pa-1">
                 {{ $t("noise.player.message") }}
             </v-card-subtitle>
-            <v-flex xs12 class="mt-8">
+            <v-flex xs12 class="mt-8 mb-0 pb-0">
                <v-slider
                  :value="currentNoiseLevel"
                  :label="$t('noise.player.level')"
@@ -13,6 +13,7 @@
                  :step="5"
                  :color="colorNoiseLevel"
                  :thumb-color="colorNoiseLevel"
+                 :track-color="colorNoiseLevel"
                  thumb-label="always"
                  ticks
                  tick-size="2"
@@ -21,10 +22,10 @@
             </v-flex>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn outlined color="primary" outline :disabled="isPlaying" @click="playArbitratyNoiseLevel">
+                <v-btn color="primary" depressed :disabled="isPlaying" @click="playArbitratyNoiseLevel">
                     {{ $t("noise.player.enable") }}
                 </v-btn>
-                <v-btn outlined color="warning" outline :disabled="!isPlaying" @click="resetNoiseLevel">
+                <v-btn color="primary" depressed :disabled="!isPlaying" @click="resetNoiseLevel">
                     {{ $t("noise.player.disable") }}
                 </v-btn>
             </v-card-actions>
@@ -62,19 +63,19 @@ export default class NoisePlayer extends Vue {
     public sliderColorRange: ColorRange[] = [
         {
             matches: (level: number) => level >= 1 && level < 50,
-            color: "#4CAF50",
+            color: "#4caf50",
         },
         {
             matches: (level: number) => level >= 50 && level <= 105,
-            color: "#FFC107",
+            color: "#fb8c00",
         },
         {
             matches: (level: number) => level > 105,
-            color: "#F44336",
+            color: "#ff5252",
         },
         {
             matches: (level: number) => true,
-            color: "",
+            color: "grey",
         },
     ];
 

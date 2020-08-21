@@ -1,6 +1,6 @@
 <template>
   <v-container fluid grid-list-xl>
-    <v-layout row wrap justify-center>
+    <v-layout row wrap justify-center class="grey lighten-5">
       <v-flex xs12 sm6 lg4>
           <v-card outlined>
             <v-card-title>
@@ -15,8 +15,8 @@
               {{ $t("noise.player.title") }}
             </v-card-title>
             <NoisePlayer :tracklist="tracklist"/>
-            <v-divider></v-divider>
             <v-card-actions>
+            <v-spacer></v-spacer>
               <v-btn text href="https://freesound.org/">
                 {{ $t("noise.player.source.label") }}
               </v-btn>
@@ -29,10 +29,9 @@
             <v-icon class="mr-4">leaderboard</v-icon>
             {{ $t("noise.levels.table.title") }}
           </v-card-title>
-          <v-divider></v-divider>
           <NoiseLevelsTable/>
-          <v-divider></v-divider>
           <v-card-actions>
+            <v-spacer></v-spacer>
             <v-btn text href="https://www.who.int/ceh/capacity/v1_ruido.pdf">
               {{ $t("noise.levels.table.source.label") }}
             </v-btn>

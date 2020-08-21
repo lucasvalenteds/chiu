@@ -3,7 +3,7 @@
     <v-alert
       id="noise-meter-error"
       :value="showError"
-      type="warning"
+      type="info"
     >{{ $t("noise.meter.chart.noise.error") }}</v-alert>
     <ve-gauge id="noise-meter-chart" :data="chartData" :settings="chartSettings"></ve-gauge>
   </div>
@@ -48,7 +48,7 @@ export default class NoiseMeterChart extends Vue {
           max: 150,
           axisLine: {
             lineStyle: {
-              color: [[0.38, "#4CAF50"], [0.7, "#FFC107"], [1, "#F44336"]],
+              color: [[0.38, "#4caf50"], [0.7, "#fb8c00"], [1, "#ff5252"]],
             },
           },
         },
