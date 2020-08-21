@@ -2,46 +2,40 @@
   <v-container fluid grid-list-xl>
     <v-layout row wrap justify-center>
       <v-flex xs12 sm6 lg4>
-          <v-card>
-            <v-card-title primary-title>
-              <v-icon class="mr-3">hearing</v-icon>
-              <h3 class="headline">{{ $t("noise.meter.chart.noise.title") }}</h3>
+          <v-card outlined>
+            <v-card-title>
+              <v-icon class="mr-4">hearing</v-icon>
+              {{ $t("noise.meter.chart.noise.title") }}
             </v-card-title>
-            <v-divider></v-divider>
             <NoiseMeterChart :apiUrl="apiUrl"/>
           </v-card>
-          <v-card class="mt-4">
+          <v-card outlined class="mt-4">
             <v-card-title primary-title>
-              <v-icon class="mr-3">radio</v-icon>
-              <h3 class="headline">{{ $t("noise.player.title") }}</h3>
+              <v-icon class="mr-4">radio</v-icon>
+              {{ $t("noise.player.title") }}
             </v-card-title>
-            <v-divider></v-divider>
             <NoisePlayer :tracklist="tracklist"/>
             <v-divider></v-divider>
             <v-card-actions>
-              <p class="subheading pa-2">{{ $t("noise.player.source.label") }}</p>
-              <a
-                target="_blank"
-                href="https://freesound.org/"
-              >{{ $t("noise.player.source.text") }}</a>
+              <v-btn text href="https://freesound.org/">
+                {{ $t("noise.player.source.label") }}
+              </v-btn>
             </v-card-actions>
           </v-card>
       </v-flex>
       <v-flex xs12 sm6 lg4>
-        <v-card>
-          <v-card-title primary-title>
-            <v-icon class="mr-3">help_outline</v-icon>
-            <h3 class="headline">{{ $t("noise.levels.table.title") }}</h3>
+        <v-card outlined>
+          <v-card-title>
+            <v-icon class="mr-4">leaderboard</v-icon>
+            {{ $t("noise.levels.table.title") }}
           </v-card-title>
           <v-divider></v-divider>
           <NoiseLevelsTable/>
           <v-divider></v-divider>
           <v-card-actions>
-            <p class="subheading pa-2">{{ $t("noise.levels.table.source.label") }}</p>
-            <a
-              target="_blank"
-              href="https://www.who.int/ceh/capacity/v1_ruido.pdf"
-            >{{ $t("noise.levels.table.source.text") }}</a>
+            <v-btn text href="https://www.who.int/ceh/capacity/v1_ruido.pdf">
+              {{ $t("noise.levels.table.source.label") }}
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>

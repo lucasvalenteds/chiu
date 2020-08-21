@@ -10,8 +10,7 @@
     "noise.meter.chart.noise.label": "Decibéis",
     "noise.meter.chart.noise.error": "Serviço indisponível",
     "noise.levels.table.title": "Valores de referência",
-    "noise.levels.table.source.label": "Fonte: ",
-    "noise.levels.table.source.text": "Organização Mundial da Saúde",
+    "noise.levels.table.source.label": "Fonte",
     "noise.levels.table.data.0": "Limiar auditivo",
     "noise.levels.table.data.10": "Respiração",
     "noise.levels.table.data.50": "Ambiente quieto",
@@ -31,6 +30,5 @@
     "noise.player.level": "Nível",
     "noise.player.enable": "Iniciar",
     "noise.player.disable": "Parar",
-    "noise.player.source.label": "Créditos:",
-    "noise.player.source.text": "Freesound e usuários"
+    "noise.player.source.label": "Fonte"
 }

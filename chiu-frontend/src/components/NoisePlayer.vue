@@ -1,10 +1,10 @@
 <template>
     <div>
         <v-flex xs12>
-            <p class="text-left">
+            <v-card-subtitle class="ma-0 pa-1">
                 {{ $t("noise.player.message") }}
-            </p>
-            <v-flex xs12>
+            </v-card-subtitle>
+            <v-flex xs12 class="mt-8">
                <v-slider
                  :value="currentNoiseLevel"
                  :label="$t('noise.player.level')"
@@ -19,12 +19,12 @@
                  @change="onLevelChange"
                ></v-slider>
             </v-flex>
-            <v-card-actions class="pa-0 ma-0">
+            <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn text flat color="primary" outline :disabled="isPlaying" @click="playArbitratyNoiseLevel">
+                <v-btn outlined color="primary" outline :disabled="isPlaying" @click="playArbitratyNoiseLevel">
                     {{ $t("noise.player.enable") }}
                 </v-btn>
-                <v-btn text flat color="warning" outline :disabled="!isPlaying" @click="resetNoiseLevel">
+                <v-btn outlined color="warning" outline :disabled="!isPlaying" @click="resetNoiseLevel">
                     {{ $t("noise.player.disable") }}
                 </v-btn>
             </v-card-actions>
@@ -70,7 +70,7 @@ export default class NoisePlayer extends Vue {
         },
         {
             matches: (level: number) => level > 105,
-            color: "#F44336"
+            color: "#F44336",
         },
         {
             matches: (level: number) => true,
@@ -86,7 +86,7 @@ export default class NoisePlayer extends Vue {
         return this.sliderColorRange
             .filter((range: ColorRange) => range.matches(this.currentNoiseLevel))
             .map((range: ColorRange) => range.color)
-            .shift()!!
+            .shift()!!;
     }
 
     public created(): void {
@@ -119,17 +119,17 @@ export default class NoisePlayer extends Vue {
     }
 
     public selectTrackBasedOnLevel(level: number, tracks: SoundTrack[]): HTMLAudioElement {
-        const soundTrack: SoundTrack = tracks 
-            .filter((soundTrack: SoundTrack) => soundTrack.levelFilter(level))
+        const soundTrack: SoundTrack = tracks
+            .filter((it: SoundTrack) => it.levelFilter(level))
             .shift()!!;
-        
+
         return new Audio(soundTrack.file);
     }
 
     public onLevelChange(level: number): void {
         this.noiseLevel = level;
 
-        if (this.noiseLevel == 0) {
+        if (this.noiseLevel === 0) {
             this.resetNoiseLevel();
         } else {
             this.stopPlaying();
