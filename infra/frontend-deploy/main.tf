@@ -4,17 +4,17 @@ variable "heroku_app_name" {}
 
 provider "heroku" {
   version = "~> 2.0"
-  email   = "${var.heroku_email}"
-  api_key = "${var.heroku_api_key}"
+  email   = var.heroku_email
+  api_key = var.heroku_api_key
 }
 
 resource "heroku_app" "chiu_frontend" {
-  name   = "${var.heroku_app_name}"
+  name   = var.heroku_app_name
   region = "us"
 }
 
 resource "heroku_build" "chiu_frontend" {
-  app = "${heroku_app.chiu_frontend.name}"
+  app = heroku_app.chiu_frontend.name
   buildpacks = [
     "https://github.com/heroku/heroku-buildpack-nodejs.git"
   ]

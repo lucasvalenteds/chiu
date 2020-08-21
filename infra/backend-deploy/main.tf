@@ -5,22 +5,22 @@ variable "chiu_frontend_url" {}
 
 provider "heroku" {
   version = "~> 2.0"
-  email   = "${var.heroku_email}"
-  api_key = "${var.heroku_api_key}"
+  email   = var.heroku_email
+  api_key = var.heroku_api_key
 }
 
 resource "heroku_app" "chiu_backend" {
-  name   = "${var.heroku_app_name}"
+  name   = var.heroku_app_name
   region = "us"
 
   config_vars = {
-    FRONTEND_URL = "${var.chiu_frontend_url}"
+    FRONTEND_URL = var.chiu_frontend_url
     GRADLE_TASK = "shadowJar"
   }
 }
 
 resource "heroku_build" "chiu_backend" {
-  app = "${heroku_app.chiu_backend.name}"
+  app = heroku_app.chiu_backend.name
   buildpacks = ["https://github.com/heroku/heroku-buildpack-gradle.git"]
 
   source = {
@@ -29,7 +29,7 @@ resource "heroku_build" "chiu_backend" {
 }
 
 resource "heroku_addon" "chiu_database" {
-  app  = "${heroku_app.chiu_backend.name}"
+  app  = heroku_app.chiu_backend.name
   plan = "heroku-redis:hobby-dev"
 }
 
