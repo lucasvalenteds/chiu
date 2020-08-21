@@ -5,7 +5,12 @@
       :value="showError"
       type="info"
     >{{ $t("noise.meter.chart.noise.error") }}</v-alert>
-    <ve-gauge id="noise-meter-chart" :data="chartData" :settings="chartSettings"></ve-gauge>
+    <ve-gauge 
+        id="noise-meter-chart"
+        :tooltip-visible="false"
+        :data="chartData"
+        :settings="chartSettings"
+    ></ve-gauge>
   </div>
 </template>
 
